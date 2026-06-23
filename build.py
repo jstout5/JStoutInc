@@ -46,7 +46,7 @@ html = """<!DOCTYPE html>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{--red:#c8102e;--cream:#f5f0e8;--dark:#1a1a1a;}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--dark);}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--dark);max-width:100%;overflow-x:hidden;}
 
 /* ── HEADER ── */
 header{
@@ -89,23 +89,46 @@ header{
 .section-sub{font-size:14px;color:#888;text-align:center;margin-bottom:40px;}
 .section-sub-light{color:rgba(255,255,255,.4);}
 
-/* ── MOBILE ── */
+/* ── MEDIUM (tablet 769–1199px) ── */
+@media(min-width:769px) and (max-width:1199px){
+  header{padding:0 32px;height:180px;}
+  .header-logo{height:140px;}
+  .header-tagline{font-size:40px;}
+  .header-nav{gap:16px;}
+  .header-phone{font-size:9px;padding:7px 12px;}
+  .section{padding:52px 28px;}
+  .section-title{font-size:32px;}
+  .cards-row{overflow-x:auto;justify-content:flex-start;padding-bottom:12px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;}
+  .nl-card{flex-shrink:0;scroll-snap-align:start;}
+  .services-grid{grid-template-columns:repeat(2,1fr);max-width:680px;margin:0 auto;}
+  .svc-card{width:100% !important;}
+  .shop-row{overflow-x:auto;justify-content:flex-start;padding-bottom:12px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;}
+  .shop-card{flex-shrink:0;scroll-snap-align:start;}
+}
+
+/* ── SMALL (mobile ≤768px) ── */
 @media(max-width:768px){
-  header{height:auto;padding:20px 20px;flex-direction:column;align-items:flex-start;gap:14px;}
-  .header-logo{height:80px;}
-  .header-tagline{font-size:24px;}
-  .header-nav{gap:16px;flex-wrap:wrap;}
-  .header-cta{padding:8px 14px;font-size:10px;}
-  .stats-bar{gap:24px;padding:14px 20px;flex-wrap:wrap;}
-  .section{padding:40px 20px;}
-  .section-title{font-size:28px;}
-  .cards-row{overflow-x:auto;justify-content:flex-start;padding-bottom:12px;-webkit-overflow-scrolling:touch;}
-  .nl-card{width:200px;flex-shrink:0;}
-  .services-grid{flex-direction:column;align-items:center;}
-  .bday-card{width:100%;max-width:360px;}
-  .svc-card{width:100%;max-width:360px;}
-  .shop-row{overflow-x:auto;justify-content:flex-start;padding-bottom:12px;-webkit-overflow-scrolling:touch;}
-  .shop-card{width:220px;flex-shrink:0;}
+  body{overflow-x:hidden;}
+  header{height:auto;padding:16px 18px;flex-direction:column;align-items:flex-start;gap:10px;}
+  #matrix-bg{display:none;}
+  .header-logo{height:72px;}
+  .header-tagline{font-size:26px;}
+  .header-brand{font-size:10px;}
+  .header-nav{gap:8px;flex-wrap:wrap;}
+  .header-nav>a:not(.header-phone){font-size:9px;letter-spacing:1.5px;}
+  .header-phone{font-size:9px;padding:6px 11px;letter-spacing:1px;}
+  .section{padding:36px 16px;}
+  .section-title{font-size:26px;}
+  .section-sub{font-size:12px;margin-bottom:28px;}
+  .section-label{font-size:9px;}
+  .cards-row{overflow-x:auto;justify-content:flex-start;padding-bottom:14px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;gap:14px;}
+  .nl-card{width:210px;flex-shrink:0;scroll-snap-align:start;}
+  .services-grid{grid-template-columns:1fr;max-width:360px;margin:0 auto;gap:14px;}
+  .svc-card{width:100% !important;}
+  .bday-card{width:100% !important;}
+  .shop-row{overflow-x:auto;justify-content:flex-start;padding-bottom:14px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;gap:14px;}
+  .shop-card{width:230px;flex-shrink:0;scroll-snap-align:start;}
+  .stat-num{font-size:20px;}
 }
 
 /* ── NEWSLETTER CARDS ── */
@@ -370,7 +393,7 @@ header{
 <div style="background:var(--red);padding:36px 40px;text-align:center;">
   <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:#fff;margin-bottom:8px;">Ready to work together?</div>
   <div style="font-size:13px;color:rgba(255,255,255,.7);margin-bottom:20px;letter-spacing:.5px;">Newsletters &middot; AI Agents &middot; Websites &middot; Apps &middot; Marketing &mdash; let&rsquo;s talk.</div>
-  <a href="tel:8593965538" style="display:inline-block;background:#fff;color:var(--red);padding:14px 36px;border-radius:6px;font-family:'Playfair Display',serif;font-size:22px;font-weight:900;text-decoration:none;letter-spacing:1px;">Call JStout &mdash; (859) 396-5538</a>
+  <a href="tel:8593965538" style="display:inline-block;background:#fff;color:var(--red);padding:14px 36px;border-radius:6px;font-family:'Playfair Display',serif;font-size:22px;font-weight:900;text-decoration:none;letter-spacing:1px;white-space:nowrap;max-width:100%;box-sizing:border-box;">Call JStout &mdash; (859) 396-5538</a>
 </div>
 
 <!-- MARKETPLACE -->
