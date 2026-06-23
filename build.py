@@ -215,7 +215,7 @@ header{
     <div class="nl-card">
       <span class="nl-badge badge-live">&#9679; Live</span>
       <div class="nl-head">
-        <img src="BULLDOG" class="nl-avatar" alt="JStoutCash">
+        <img src="IMG_BULLDOG" class="nl-avatar" alt="JStoutCash">
         <div><div class="nl-name">JStoutCash</div><div class="nl-freq">Daily &middot; Stock Market</div></div>
       </div>
       <div class="nl-body"><div class="nl-desc">Daily stock market intelligence. 52-week lows, dividend plays, options flow &amp; top movers — before the bell.</div></div>
@@ -229,7 +229,7 @@ header{
     <div class="nl-card nl-card-soon">
       <span class="nl-badge badge-soon">Coming Soon</span>
       <div class="nl-head">
-        <img src="HORSE" class="nl-avatar" alt="JStoutHorse">
+        <img src="IMG_HORSE" class="nl-avatar" alt="JStoutHorse">
         <div><div class="nl-name">JStoutHorse</div><div class="nl-freq">Race Days &middot; Handicapping</div></div>
       </div>
       <div class="nl-body"><div class="nl-desc">Horse racing picks &amp; handicapping. Track conditions, pace analysis, trainer stats &amp; value overlays for every major race.</div></div>
@@ -243,7 +243,7 @@ header{
     <div class="nl-card nl-card-soon">
       <span class="nl-badge badge-soon">Coming Soon</span>
       <div class="nl-head">
-        <img src="MLB" class="nl-avatar" alt="MLB">
+        <img src="IMG_MLB" class="nl-avatar" alt="MLB Newsletter">
         <div><div class="nl-name">MLB Newsletter</div><div class="nl-freq">Daily &middot; Baseball</div></div>
       </div>
       <div class="nl-body"><div class="nl-desc">Daily baseball intelligence. Standings, hot bats, pitcher matchups, and value picks for the serious fan.</div></div>
@@ -257,7 +257,7 @@ header{
     <div class="nl-card nl-card-soon">
       <span class="nl-badge badge-soon">Coming Soon</span>
       <div class="nl-head">
-        <img src="HOUSE" class="nl-avatar" alt="JStoutHouse">
+        <img src="IMG_HOUSE" class="nl-avatar" alt="JStoutHouse">
         <div><div class="nl-name">JStoutHouse</div><div class="nl-freq">Weekly &middot; Real Estate</div></div>
       </div>
       <div class="nl-body"><div class="nl-desc">Market trends &amp; deal alerts for real estate investors. Find the edge before anyone else.</div></div>
@@ -271,7 +271,7 @@ header{
     <div class="nl-card nl-card-soon">
       <span class="nl-badge badge-soon">Coming Soon</span>
       <div class="nl-head">
-        <img src="BULLDOG" class="nl-avatar" alt="Odds">
+        <img src="IMG_BULLDOG" class="nl-avatar" alt="Odds">
         <div><div class="nl-name">Odds Report</div><div class="nl-freq">Daily &middot; Betting</div></div>
       </div>
       <div class="nl-body"><div class="nl-desc">Sharp line movement &amp; value plays across all major sports leagues. Know where the money's going.</div></div>
@@ -395,10 +395,10 @@ header{
 
 html = (html
     .replace("LOGO",          logo)
-    .replace("BULLDOG",       bulldog)
-    .replace("HORSE",         horse)
-    .replace("MLB",           mlb_img)
-    .replace("HOUSE",         house_img)
+    .replace("IMG_BULLDOG",   bulldog)
+    .replace("IMG_HORSE",     horse)
+    .replace("IMG_MLB",       mlb_img)
+    .replace("IMG_HOUSE",     house_img)
     .replace("PREVIEW_CASH",  previews['cash'])
     .replace("PREVIEW_HORSE", previews['horse'])
     .replace("PREVIEW_MLB",   previews['mlb'])
