@@ -346,10 +346,10 @@ header{
     </div>
 
     <div class="svc-card">
-      <div class="svc-icon">&#128200;</div>
-      <div class="svc-name">SEO</div>
-      <div class="svc-desc">Technical SEO &amp; local search domination.</div>
-      <a href="mailto:frostbytehero@gmail.com?subject=SEO Inquiry" class="svc-btn">Get a Quote &rarr;</a>
+      <div class="svc-icon">&#128293;</div>
+      <div class="svc-name">Marketing Tools</div>
+      <div class="svc-desc">Flyers, email campaigns, promos &amp; social content built to drive traffic.</div>
+      <a href="mailto:frostbytehero@gmail.com?subject=Marketing Inquiry" class="svc-btn">Get a Quote &rarr;</a>
     </div>
 
   </div>
