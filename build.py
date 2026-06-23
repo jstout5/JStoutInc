@@ -84,6 +84,25 @@ header{
 .section-sub{font-size:14px;color:#888;text-align:center;margin-bottom:40px;}
 .section-sub-light{color:rgba(255,255,255,.4);}
 
+/* ── MOBILE ── */
+@media(max-width:768px){
+  header{height:auto;padding:16px 20px;flex-direction:column;align-items:flex-start;gap:12px;}
+  .header-logo{height:60px;}
+  .header-tagline{font-size:24px;}
+  .header-nav{gap:16px;flex-wrap:wrap;}
+  .header-cta{padding:8px 14px;font-size:10px;}
+  .stats-bar{gap:24px;padding:14px 20px;flex-wrap:wrap;}
+  .section{padding:40px 20px;}
+  .section-title{font-size:28px;}
+  .cards-row{overflow-x:auto;justify-content:flex-start;padding-bottom:12px;-webkit-overflow-scrolling:touch;}
+  .nl-card{width:200px;flex-shrink:0;}
+  .services-grid{flex-direction:column;align-items:center;}
+  .bday-card{width:100%;max-width:360px;}
+  .svc-card{width:100%;max-width:360px;}
+  .shop-row{overflow-x:auto;justify-content:flex-start;padding-bottom:12px;-webkit-overflow-scrolling:touch;}
+  .shop-card{width:220px;flex-shrink:0;}
+}
+
 /* ── NEWSLETTER CARDS ── */
 .cards-row{display:flex;gap:20px;justify-content:center;}
 .nl-card{
