@@ -399,13 +399,12 @@ header{
   init();
   window.addEventListener('resize',init);
   function draw(){
-    ctx.fillStyle='rgba(245,240,232,0.18)';
+    ctx.fillStyle='rgba(245,240,232,0.12)';
     ctx.fillRect(0,0,c.width,c.height);
-    ctx.font=fs+'px monospace';
+    ctx.font='bold '+fs+'px monospace';
     for(var i=0;i<drops.length;i++){
       var ch=chars[Math.floor(Math.random()*chars.length)];
-      var fade=drops[i]/cols;
-      ctx.fillStyle='rgba(200,16,46,'+(0.03+fade*0.05)+')';
+      ctx.fillStyle='rgba(200,16,46,0.28)';
       ctx.fillText(ch,i*fs,drops[i]*fs);
       if(drops[i]*fs>c.height&&Math.random()>0.97) drops[i]=0;
       drops[i]++;
