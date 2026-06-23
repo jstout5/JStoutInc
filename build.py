@@ -345,10 +345,11 @@ header{
       <div class="svc-name">Apps</div>
       <div class="svc-desc">Custom web &amp; mobile apps built to solve real problems.</div>
       <div style="margin-top:14px;padding:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;">
-        <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;">&#9733; Recent Work</div>
+        <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px;">&#9733; Recent Work</div>
         <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">&#9997; Bible Reading App</div>
-        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:10px;">Daily reading tracker &amp; verse journal.</div>
-        <img src="BIBLE_IMG" style="width:100%;border-radius:6px;display:block;">
+        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:8px;">Daily reading tracker &amp; verse journal.</div>
+        <img src="BIBLE_IMG" style="width:100%;border-radius:6px;display:block;margin-bottom:8px;">
+        <a href="bible_mock.html" target="_blank" style="display:inline-block;background:rgba(255,255,255,.1);color:#fff;padding:6px 14px;border-radius:5px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;">View App &rarr;</a>
       </div>
       <a href="mailto:frostbytehero@gmail.com?subject=App Inquiry" class="svc-btn" style="display:inline-block;margin-top:14px;">Get a Quote &rarr;</a>
     </div>
@@ -358,10 +359,11 @@ header{
       <div class="svc-name">Marketing Tools</div>
       <div class="svc-desc">Flyers, email campaigns, promos &amp; social content built to drive traffic.</div>
       <div style="margin-top:14px;padding:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;">
-        <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;">&#9733; Recent Work</div>
+        <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px;">&#9733; Recent Work</div>
         <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">&#127807; Brushy Creek Fall Hunt</div>
-        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:10px;">Promo flyer — designed, printed &amp; sold.</div>
-        <img src="FALL_FLYER" style="width:100%;border-radius:6px;display:block;">
+        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:8px;">Promo flyer — designed, printed &amp; sold.</div>
+        <img src="FALL_FLYER" style="width:100%;border-radius:6px;display:block;margin-bottom:8px;">
+        <a href="fall-hunt-2026.html" target="_blank" style="display:inline-block;background:rgba(255,255,255,.1);color:#fff;padding:6px 14px;border-radius:5px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;">View Flyer &rarr;</a>
       </div>
       <a href="mailto:frostbytehero@gmail.com?subject=Marketing Inquiry" class="svc-btn" style="display:inline-block;margin-top:14px;">Get a Quote &rarr;</a>
     </div>
