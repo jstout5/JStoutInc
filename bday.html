@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>B Day Execution — Never Miss a Birthday</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--red:#c8102e;--red2:#9e0c24;--cream:#f0eadb;}
+body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:var(--cream);color:#1a1a1a;min-height:100vh;display:flex;flex-direction:column;}
+
+/* NAV */
+nav{height:48px;background:var(--cream);display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.nav-brand{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--red);text-decoration:none;}
+.nav-back{font-family:'Cinzel',serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(60,35,0,.4);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--red);}
+
+/* HERO */
+.hero{text-align:center;padding:52px 20px 40px;}
+.hero-emoji{font-size:56px;margin-bottom:16px;}
+.hero-title{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;color:var(--red);letter-spacing:-1.5px;line-height:1;margin-bottom:10px;}
+.hero-sub{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;font-style:italic;color:rgba(0,0,0,.4);margin-bottom:6px;}
+.hero-desc{font-size:13px;color:#888;max-width:480px;margin:0 auto;line-height:1.6;}
+
+/* HOW IT WORKS */
+.how{display:flex;justify-content:center;gap:0;max-width:640px;margin:32px auto 0;padding:0 20px;}
+.how-step{flex:1;text-align:center;padding:0 12px;position:relative;}
+.how-step:not(:last-child)::after{content:'→';position:absolute;right:-6px;top:14px;color:rgba(200,16,46,.3);font-size:18px;}
+.how-num{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;font-family:'Cinzel',serif;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;}
+.how-text{font-size:10px;color:#888;line-height:1.4;}
+
+/* FORM CARD */
+.form-wrap{max-width:520px;margin:40px auto 60px;padding:0 20px;}
+.form-card{background:#fff;border-radius:20px;border:1px solid rgba(0,0,0,.07);box-shadow:0 8px 40px rgba(0,0,0,.09);padding:36px 40px 32px;}
+.form-title{font-family:'Cinzel',serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(40,20,0,.3);margin-bottom:24px;text-align:center;}
+
+.field{margin-bottom:18px;}
+label{display:block;font-family:'Cinzel',serif;font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(40,20,0,.5);margin-bottom:6px;}
+input[type=text],input[type=date],select{
+  width:100%;padding:12px 14px;border:1.5px solid rgba(0,0,0,.1);border-radius:8px;
+  font-size:14px;font-family:"Segoe UI",sans-serif;color:#1a1a1a;
+  background:#fff;outline:none;transition:border-color .2s;
+}
+input[type=text]:focus,input[type=date]:focus,select:focus{border-color:var(--red);}
+select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+
+/* GENDER RADIO */
+.gender-row{display:flex;gap:10px;}
+.gender-opt{flex:1;}
+.gender-opt input[type=radio]{display:none;}
+.gender-opt label{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px;border:1.5px solid rgba(0,0,0,.1);border-radius:8px;
+  cursor:pointer;font-size:13px;font-family:"Segoe UI",sans-serif;
+  color:#555;letter-spacing:0;text-transform:none;font-weight:400;
+  transition:all .18s;
+}
+.gender-opt input[type=radio]:checked + label{
+  border-color:var(--red);color:var(--red);background:rgba(200,16,46,.04);font-weight:600;
+}
+.gender-opt label:hover{border-color:rgba(200,16,46,.4);}
+
+/* ONE PER CHILD */
+.one-per{display:flex;align-items:flex-start;gap:10px;padding:14px;background:#faf8f4;border-radius:8px;border:1px solid rgba(0,0,0,.07);margin-bottom:22px;}
+.one-per input[type=checkbox]{width:16px;height:16px;margin-top:1px;accent-color:var(--red);flex-shrink:0;cursor:pointer;}
+.one-per-text{font-size:11px;color:#666;line-height:1.5;}
+.one-per-text strong{color:#1a1a1a;font-weight:600;}
+
+/* ERROR */
+.error-msg{display:none;background:#fff0f2;border:1px solid rgba(200,16,46,.2);border-radius:8px;padding:10px 14px;font-size:11px;color:var(--red);margin-bottom:16px;text-align:center;}
+
+/* SUBMIT */
+.submit-btn{
+  display:block;width:100%;padding:16px;border:none;
+  background:linear-gradient(135deg,var(--red),var(--red2));
+  color:#fff;border-radius:10px;cursor:pointer;
+  font-family:'Cinzel',serif;font-size:11px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  box-shadow:0 6px 24px rgba(200,16,46,.35);
+  transition:transform .2s,box-shadow .2s;
+}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(200,16,46,.48);}
+.submit-note{text-align:center;font-size:10px;color:#aaa;margin-top:10px;}
+
+/* DUPLICATE MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center;}
+.modal-overlay.show{display:flex;}
+.modal{background:#fff;border-radius:16px;padding:32px;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2);}
+.modal-emoji{font-size:40px;margin-bottom:12px;}
+.modal-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--red);margin-bottom:8px;}
+.modal-body{font-size:13px;color:#666;line-height:1.6;margin-bottom:20px;}
+.modal-btn{display:inline-block;padding:10px 24px;background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;border-radius:7px;font-family:'Cinzel',serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-brand">JStout Inc</a>
+  <a href="/" class="nav-back">← Back to Hub</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-emoji">🎁</div>
+  <div class="hero-title">When's their next birthday?</div>
+  <div class="hero-sub">Set it once. We handle everything.</div>
+  <div class="hero-desc">We search Amazon, buy the best Prime gift in your budget, get it wrapped with a card, and ship it to their door — 3 days before the big day.</div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how">
+  <div class="how-step">
+    <div class="how-num">1</div>
+    <div class="how-text">Tell us who & when</div>
+  </div>
+  <div class="how-step">
+    <div class="how-num">2</div>
+    <div class="how-text">We find the best Amazon Prime gift</div>
+  </div>
+  <div class="how-step">
+    <div class="how-num">3</div>
+    <div class="how-text">Gift wrapped & shipped 3 days early</div>
+  </div>
+</div>
+
+<!-- FORM -->
+<div class="form-wrap">
+  <div class="form-card">
+    <div class="form-title">Recipient Details</div>
+
+    <div class="error-msg" id="dup-error">
+      ⚠️ You already have an active subscription for this recipient.
+    </div>
+
+    <form id="bday-form" action="https://formsubmit.co/frostbytehero@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="🎁 New B Day Execution Signup">
+      <input type="hidden" name="_next" value="https://buy.stripe.com/4gM4gsfrn4Ar5T19lr5Rm00">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+
+      <div class="field">
+        <label for="email">Your Email</label>
+        <input type="text" id="email" name="email" placeholder="your@email.com" required>
+      </div>
+
+      <div class="field">
+        <label for="recipient_name">Recipient's First Name</label>
+        <input type="text" id="recipient_name" name="recipient_name" placeholder="e.g. Emma" required>
+      </div>
+
+      <div class="field">
+        <label>Gender</label>
+        <div class="gender-row">
+          <div class="gender-opt">
+            <input type="radio" id="male" name="gender" value="Male" required>
+            <label for="male">&#128104; Male</label>
+          </div>
+          <div class="gender-opt">
+            <input type="radio" id="female" name="gender" value="Female">
+            <label for="female">&#128105; Female</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="birthday">Birthday</label>
+        <input type="date" id="birthday" name="birthday" required>
+      </div>
+
+      <div class="field">
+        <label for="gift_budget">Gift Budget</label>
+        <select id="gift_budget" name="gift_budget" required>
+          <option value="" disabled selected>Select a budget...</option>
+          <option value="Under $25">Under $25</option>
+          <option value="$25 - $50">$25 – $50</option>
+          <option value="$50 - $75">$50 – $75</option>
+          <option value="$75 - $100">$75 – $100</option>
+          <option value="$100+">$100+</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="shipping_name">Ship to (your name)</label>
+        <input type="text" id="shipping_name" name="shipping_name" placeholder="Your full name" required>
+      </div>
+
+      <div class="field">
+        <label for="shipping_address">Shipping Address</label>
+        <input type="text" id="shipping_address" name="shipping_address" placeholder="Street, City, State, ZIP" required>
+      </div>
+
+      <!-- One sub per child -->
+      <div class="one-per">
+        <input type="checkbox" id="confirm_new" name="confirmed_new" value="yes" required>
+        <div class="one-per-text">
+          <strong>One subscription per recipient.</strong> I confirm this person does not already have an active B Day Execution subscription under my account.
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Continue to Checkout — $30/month &#8594;</button>
+      <div class="submit-note">After submitting, you'll be taken to our secure Stripe checkout.</div>
+    </form>
+  </div>
+</div>
+
+<script>
+// Store submissions in localStorage to catch same-device duplicates
+document.getElementById('bday-form').addEventListener('submit', function(e) {
+  const name = document.getElementById('recipient_name').value.trim().toLowerCase();
+  const bday = document.getElementById('birthday').value;
+  const key = 'bday_subs';
+  const existing = JSON.parse(localStorage.getItem(key) || '[]');
+  const isDupe = existing.some(s => s.name === name && s.bday === bday);
+
+  if (isDupe) {
+    e.preventDefault();
+    document.getElementById('dup-error').style.display = 'block';
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    return;
+  }
+
+  existing.push({ name, bday });
+  localStorage.setItem(key, JSON.stringify(existing));
+});
+</script>
+
+</body>
+</html>

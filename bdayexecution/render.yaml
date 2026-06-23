@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: jstout-bday
+    runtime: python
+    rootDir: bdayexecution
+    buildCommand: pip install -r requirements.txt && playwright install chromium && playwright install-deps chromium
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    plan: starter
+    envVars:
+      - key: SMTP_EMAIL
+        value: frostbytehero@gmail.com
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: WALMART_EMAIL
+        sync: false
+      - key: WALMART_PASSWORD
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: BASE_URL
+        value: https://jstout-bday.onrender.com
+      - key: DB_PATH
+        value: /data/bday.db
+    disk:
+      name: bday-db
+      mountPath: /data
+      sizeGB: 1
