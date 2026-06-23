@@ -42,6 +42,18 @@ def init_db():
                 purchased_at TIMESTAMP,
                 UNIQUE(recipient_id, year)
             );
+
+            CREATE TABLE IF NOT EXISTS products (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                description TEXT,
+                price REAL NOT NULL,
+                image_b64 TEXT,
+                paypal_link TEXT,
+                stripe_link TEXT,
+                in_stock INTEGER DEFAULT 1,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
         """)
 
 @contextmanager
@@ -134,3 +146,24 @@ def get_order(order_id):
             (order_id,)
         ).fetchone()
         return dict(row) if row else None
+
+def get_products():
+    with get_conn() as conn:
+        rows = conn.execute("SELECT * FROM products ORDER BY created_at DESC").fetchall()
+        return [dict(r) for r in rows]
+
+def add_product(name, description, price, image_b64, paypal_link, stripe_link):
+    with get_conn() as conn:
+        cur = conn.execute(
+            "INSERT INTO products (name, description, price, image_b64, paypal_link, stripe_link) VALUES (?,?,?,?,?,?)",
+            (name, description, price, image_b64, paypal_link, stripe_link)
+        )
+        return cur.lastrowid
+
+def delete_product(product_id):
+    with get_conn() as conn:
+        conn.execute("DELETE FROM products WHERE id=?", (product_id,))
+
+def toggle_product_stock(product_id):
+    with get_conn() as conn:
+        conn.execute("UPDATE products SET in_stock = 1 - in_stock WHERE id=?", (product_id,))

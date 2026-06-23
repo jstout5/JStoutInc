@@ -7,19 +7,24 @@ Routes:
   GET  /admin            — Quick dashboard of all subscribers + upcoming
 """
 import asyncio
+import base64
 import logging
 import os
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Form, Request, HTTPException
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi import FastAPI, Form, Request, HTTPException, UploadFile, File
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
 load_dotenv()
 
 from db import (
     init_db, add_subscriber, add_recipient,
-    activate_subscriber, approve_order, get_order, mark_purchased, get_conn
+    activate_subscriber, approve_order, get_order, mark_purchased, get_conn,
+    get_products, add_product, delete_product, toggle_product_stock
 )
+
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "jstout2025")
 from scheduler import start_scheduler
 from walmart import purchase_gift
 from emailer import send_subscriber_confirmation, send_shipped_notice
@@ -38,6 +43,17 @@ async def lifespan(app: FastAPI):
     scheduler.shutdown()
 
 app = FastAPI(title="B Day Execution", lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://jstoutinc.onrender.com", "http://localhost", "file://"],
+    allow_methods=["GET", "POST", "DELETE"],
+    allow_headers=["*"],
+)
+
+def require_admin(key: str = ""):
+    if key != ADMIN_PASSWORD:
+        raise HTTPException(status_code=403, detail="Forbidden")
 
 
 # ── SUBSCRIBE ─────────────────────────────────────────────────────────────────
@@ -173,6 +189,140 @@ async def admin():
     <h2 style="margin-top:24px">Recent Orders</h2>
     <table><tr><th>ID</th><th>Recipient</th><th>Product</th><th>Price</th><th>Status</th><th>Created</th></tr>{rows}</table>
     </body></html>"""
+
+
+# ── PUBLIC PRODUCTS API ────────────────────────────────────────────────────────
+
+@app.get("/api/products")
+async def api_products():
+    return JSONResponse(get_products())
+
+
+# ── ADMIN SHOP ─────────────────────────────────────────────────────────────────
+
+@app.get("/admin/shop", response_class=HTMLResponse)
+async def admin_shop(key: str = ""):
+    if key != ADMIN_PASSWORD:
+        return HTMLResponse(_admin_login("shop"))
+    products = get_products()
+    rows = ""
+    for p in products:
+        img = f'<img src="{p["image_b64"]}" style="height:50px;border-radius:4px">' if p.get("image_b64") else "—"
+        stock = "✅ In Stock" if p["in_stock"] else "❌ Out"
+        rows += f"""<tr>
+          <td>{img}</td>
+          <td><strong>{p['name']}</strong><br><small style="color:#888">{p['description'] or ''}</small></td>
+          <td><strong>${p['price']:,.2f}</strong></td>
+          <td>{stock}</td>
+          <td>
+            <form method="POST" action="/admin/shop/{p['id']}/toggle?key={key}" style="display:inline">
+              <button style="{_btn_style('#555')}">Toggle Stock</button>
+            </form>
+            <form method="POST" action="/admin/shop/{p['id']}/delete?key={key}" style="display:inline"
+                  onsubmit="return confirm('Delete this product?')">
+              <button style="{_btn_style('#c8102e')}">Delete</button>
+            </form>
+          </td>
+        </tr>"""
+
+    return f"""<!DOCTYPE html><html><head><title>Shop Admin — JStout Inc</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+      body{{font-family:'Segoe UI',sans-serif;background:#f5f0e8;margin:0;padding:24px;}}
+      h1{{color:#c8102e;margin-bottom:4px;}} .sub{{color:#888;font-size:13px;margin-bottom:28px;}}
+      .card{{background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-bottom:24px;}}
+      table{{width:100%;border-collapse:collapse;}} th,td{{padding:10px 12px;border-bottom:1px solid #eee;text-align:left;font-size:13px;}}
+      th{{background:#f9f6f0;font-weight:700;color:#555;}}
+      label{{display:block;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#888;margin-bottom:5px;margin-top:14px;}}
+      input,textarea,select{{width:100%;padding:10px 12px;border:1.5px solid #ddd;border-radius:7px;font-size:14px;outline:none;}}
+      input:focus,textarea:focus{{border-color:#c8102e;}}
+      .grid{{display:grid;grid-template-columns:1fr 1fr;gap:16px;}}
+    </style></head><body>
+    <h1>🛍️ Shop Admin</h1>
+    <div class="sub">JStout Inc — Product Management &nbsp;|&nbsp; <a href="/admin?key={key}">← B Day Dashboard</a></div>
+
+    <div class="card">
+      <h3 style="margin-bottom:16px">Add New Product</h3>
+      <form method="POST" action="/admin/shop/add?key={key}" enctype="multipart/form-data">
+        <label>Product Name</label>
+        <input name="name" required placeholder="e.g. Cactus Jack 2025 NBA Hobby Box">
+        <label>Description</label>
+        <textarea name="description" rows="2" placeholder="Factory Sealed · Ships Insured"></textarea>
+        <div class="grid">
+          <div><label>Price ($)</label><input name="price" type="number" step="0.01" required placeholder="1000.00"></div>
+          <div><label>Product Image</label><input name="image" type="file" accept="image/*"></div>
+        </div>
+        <div class="grid">
+          <div><label>PayPal Link</label><input name="paypal_link" placeholder="https://paypal.com/..."></div>
+          <div><label>Stripe Link</label><input name="stripe_link" placeholder="https://buy.stripe.com/..."></div>
+        </div>
+        <button type="submit" style="{_btn_style('#c8102e')};margin-top:18px;padding:12px 24px;font-size:13px;">
+          ➕ Add Product
+        </button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-bottom:16px">Current Products ({len(products)})</h3>
+      <table>
+        <tr><th>Image</th><th>Product</th><th>Price</th><th>Stock</th><th>Actions</th></tr>
+        {rows if rows else '<tr><td colspan="5" style="text-align:center;color:#aaa;padding:24px">No products yet</td></tr>'}
+      </table>
+    </div>
+    </body></html>"""
+
+
+@app.post("/admin/shop/add", response_class=HTMLResponse)
+async def admin_add_product(
+    key: str = "",
+    name: str = Form(...),
+    description: str = Form(""),
+    price: float = Form(...),
+    paypal_link: str = Form(""),
+    stripe_link: str = Form(""),
+    image: UploadFile = File(None),
+):
+    require_admin(key)
+    image_b64 = None
+    if image and image.filename:
+        data = await image.read()
+        ext = image.content_type or "image/jpeg"
+        image_b64 = f"data:{ext};base64," + base64.b64encode(data).decode()
+    add_product(name, description, price, image_b64, paypal_link or None, stripe_link or None)
+    return RedirectResponse(f"/admin/shop?key={key}", status_code=303)
+
+
+@app.post("/admin/shop/{product_id}/delete")
+async def admin_delete_product(product_id: int, key: str = ""):
+    require_admin(key)
+    delete_product(product_id)
+    return RedirectResponse(f"/admin/shop?key={key}", status_code=303)
+
+
+@app.post("/admin/shop/{product_id}/toggle")
+async def admin_toggle_product(product_id: int, key: str = ""):
+    require_admin(key)
+    toggle_product_stock(product_id)
+    return RedirectResponse(f"/admin/shop?key={key}", status_code=303)
+
+
+def _btn_style(color):
+    return f"background:{color};color:#fff;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;font-size:11px;font-weight:700;margin:2px"
+
+def _admin_login(next_page):
+    return f"""<!DOCTYPE html><html><head><title>Admin Login</title>
+    <style>body{{font-family:'Segoe UI',sans-serif;background:#f5f0e8;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;}}
+    .box{{background:#fff;padding:40px;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.1);width:320px;text-align:center;}}
+    h2{{color:#c8102e;margin-bottom:4px;}} p{{color:#888;font-size:13px;margin-bottom:24px;}}
+    input{{width:100%;padding:12px;border:1.5px solid #ddd;border-radius:7px;font-size:15px;box-sizing:border-box;outline:none;margin-bottom:14px;}}
+    button{{width:100%;padding:13px;background:#c8102e;color:#fff;border:none;border-radius:7px;font-size:14px;font-weight:700;cursor:pointer;}}</style>
+    </head><body><div class="box">
+    <h2>🔒 Admin</h2><p>JStout Inc — Restricted</p>
+    <form method="GET" action="/admin/{next_page}">
+      <input type="password" name="key" placeholder="Enter password" autofocus>
+      <button type="submit">Unlock</button>
+    </form>
+    </div></body></html>"""
 
 
 # ── DUPLICATE PAGE ─────────────────────────────────────────────────────────────

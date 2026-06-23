@@ -359,55 +359,48 @@ header{
   <div class="section-label">Shop</div>
   <h2 class="section-title">Marketplace</h2>
   <p class="section-sub">Premium inventory. Ships insured. Real deals.</p>
-  <div class="shop-row">
-
-    <div class="shop-card">
-      <span class="in-stock">In Stock</span>
-      <div class="shop-img shop-img-dark">
-        <div class="cj-label">Cactus Jack</div>
-        <div class="cj-year">2025</div>
-        <div class="cj-type">NBA Hobby Box</div>
-      </div>
-      <div class="shop-body">
-        <div class="shop-name">Cactus Jack 2025 NBA Hobby Box</div>
-        <div class="shop-sub">Factory Sealed &middot; Travis Scott x NBA &middot; Ships Insured</div>
-        <div class="shop-price">$1,000</div>
-        <div class="shop-btns">
-          <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=frostbytehero%40gmail.com&item_name=Cactus+Jack+2025+NBA+Hobby+Box&amount=1000.00&currency_code=USD" target="_blank" class="btn-pp">PayPal</a>
-          <a href="mailto:frostbytehero@gmail.com?subject=Cactus Jack - Stripe Payment" class="btn-st">Stripe</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="shop-card">
-      <div class="shop-img shop-img-ph"><div class="ph-text">Coming Soon</div></div>
-      <div class="shop-body">
-        <div class="shop-name" style="color:#ccc">Next Drop</div>
-        <div class="shop-sub">More inventory loading</div>
-        <a href="mailto:frostbytehero@gmail.com?subject=Notify Me" class="btn-notify">Notify Me</a>
-      </div>
-    </div>
-
-    <div class="shop-card">
-      <div class="shop-img shop-img-ph"><div class="ph-text">Coming Soon</div></div>
-      <div class="shop-body">
-        <div class="shop-name" style="color:#ccc">Next Drop</div>
-        <div class="shop-sub">More inventory loading</div>
-        <a href="mailto:frostbytehero@gmail.com?subject=Notify Me" class="btn-notify">Notify Me</a>
-      </div>
-    </div>
-
-    <div class="shop-card">
-      <div class="shop-img shop-img-ph"><div class="ph-text">Coming Soon</div></div>
-      <div class="shop-body">
-        <div class="shop-name" style="color:#ccc">Next Drop</div>
-        <div class="shop-sub">More inventory loading</div>
-        <a href="mailto:frostbytehero@gmail.com?subject=Notify Me" class="btn-notify">Notify Me</a>
-      </div>
-    </div>
-
+  <div class="shop-row" id="shop-row">
+    <div style="text-align:center;width:100%;color:#aaa;padding:40px;font-size:14px;">Loading products...</div>
   </div>
 </div>
+
+<script>
+const API = "https://jstout-bday.onrender.com/api/products";
+fetch(API)
+  .then(r => r.json())
+  .then(products => {
+    const row = document.getElementById("shop-row");
+    if (!products.length) {
+      row.innerHTML = '<div style="text-align:center;width:100%;color:#aaa;padding:40px">No products listed yet.</div>';
+      return;
+    }
+    row.innerHTML = products.map(p => {
+      const img = p.image_b64
+        ? `<img src="${p.image_b64}" style="width:100%;height:160px;object-fit:cover;">`
+        : `<div class="shop-img shop-img-ph"><div class="ph-text">${p.name}</div></div>`;
+      const badge = p.in_stock ? '<span class="in-stock">In Stock</span>' : '<span class="in-stock" style="background:#aaa">Out of Stock</span>';
+      const btns = [
+        p.paypal_link ? `<a href="${p.paypal_link}" target="_blank" class="btn-pp">PayPal</a>` : '',
+        p.stripe_link ? `<a href="${p.stripe_link}" target="_blank" class="btn-st">Stripe</a>` : '',
+        (!p.paypal_link && !p.stripe_link) ? `<a href="mailto:frostbytehero@gmail.com?subject=Purchase: ${encodeURIComponent(p.name)}" class="btn-st">Buy Now</a>` : ''
+      ].join('');
+      return `<div class="shop-card">
+        ${badge}
+        <div class="shop-img">${img}</div>
+        <div class="shop-body">
+          <div class="shop-name">${p.name}</div>
+          <div class="shop-sub">${p.description || ''}</div>
+          <div class="shop-price">$${Number(p.price).toLocaleString()}</div>
+          <div class="shop-btns">${btns}</div>
+        </div>
+      </div>`;
+    }).join('');
+  })
+  .catch(() => {
+    document.getElementById("shop-row").innerHTML =
+      '<div style="text-align:center;width:100%;color:#aaa;padding:40px">Shop loading... check back soon.</div>';
+  });
+</script>
 
 </body>
 </html>"""
