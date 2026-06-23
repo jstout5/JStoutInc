@@ -1,8 +1,9 @@
-fastapi==0.111.0
-uvicorn==0.29.0
-apscheduler==3.10.4
-playwright==1.44.0
-aiosmtplib==3.0.1
-python-dotenv==1.0.1
-python-multipart==0.0.9
-jinja2==3.1.4
+fastapi
+uvicorn
+apscheduler
+playwright
+aiosmtplib
+python-dotenv
+python-multipart
+jinja2
+greenlet==3.0.3
