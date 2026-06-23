@@ -311,16 +311,17 @@ header{
   <p class="section-sub section-sub-light">Automation, websites, and intelligence tools built to make you money.</p>
   <div class="services-grid">
 
-    <div class="bday-card">
-      <span class="bday-new">&#9733; Featured</span>
-      <div class="bday-emoji">&#127874;</div>
-      <div class="bday-name">B Day Execution</div>
-      <div class="bday-tagline">Set it once. We handle everything.</div>
-      <div class="bday-desc">We search Walmart, buy the best gift in your budget, get it gift wrapped, and ship it 3 days before the birthday. Every year. Automatically.</div>
-      <div class="bday-footer">
-        <div class="bday-price">$30<span>/mo</span></div>
-        <a href="bday.html" class="bday-btn">Get Started</a>
+    <div class="svc-card" style="width:300px;">
+      <div class="svc-icon">&#129302;</div>
+      <div class="svc-name">AI Agents</div>
+      <div class="svc-desc">Custom automation built to run itself. Set it once, done forever.</div>
+      <div style="margin-top:14px;padding:12px;background:rgba(200,16,46,.1);border:1px solid rgba(200,16,46,.25);border-radius:8px;">
+        <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);margin-bottom:6px;">&#9733; Available Now</div>
+        <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">&#127874; Birthday Gift Agent</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:10px;">We find, buy &amp; ship the perfect gift — 3 days before every birthday. $30/mo.</div>
+        <a href="bday.html" class="svc-btn" style="display:inline-block;background:var(--red);color:#fff;padding:6px 14px;border-radius:5px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;">Get Started</a>
       </div>
+      <a href="mailto:frostbytehero@gmail.com?subject=AI Agent Inquiry" class="svc-btn" style="display:inline-block;margin-top:14px;">Custom Agent &rarr;</a>
     </div>
 
     <div class="svc-card">
@@ -328,13 +329,6 @@ header{
       <div class="svc-name">Websites</div>
       <div class="svc-desc">Fast, sharp, built to convert. Landing pages to full builds.</div>
       <a href="mailto:frostbytehero@gmail.com?subject=Website Inquiry" class="svc-btn">Get a Quote &rarr;</a>
-    </div>
-
-    <div class="svc-card">
-      <div class="svc-icon">&#129302;</div>
-      <div class="svc-name">AI Agents</div>
-      <div class="svc-desc">Custom automation that runs itself. Set it once, done forever.</div>
-      <a href="mailto:frostbytehero@gmail.com?subject=AI Agent Inquiry" class="svc-btn">Get a Quote &rarr;</a>
     </div>
 
     <div class="svc-card">
