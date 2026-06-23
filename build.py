@@ -89,48 +89,6 @@ header{
 .section-sub{font-size:14px;color:#888;text-align:center;margin-bottom:40px;}
 .section-sub-light{color:rgba(255,255,255,.4);}
 
-/* ── MEDIUM (tablet 769–1199px) ── */
-@media(min-width:769px) and (max-width:1199px){
-  header{padding:0 32px;height:180px;}
-  .header-logo{height:140px;}
-  .header-tagline{font-size:40px;}
-  .header-nav{gap:16px;}
-  .header-phone{font-size:9px;padding:7px 12px;}
-  .section{padding:52px 28px;}
-  .section-title{font-size:32px;}
-  .cards-row{overflow-x:auto;justify-content:flex-start;padding-bottom:12px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;}
-  .nl-card{flex-shrink:0;scroll-snap-align:start;}
-  .services-grid{grid-template-columns:repeat(2,1fr);max-width:680px;margin:0 auto;}
-  .svc-card{width:100% !important;}
-  .shop-row{overflow-x:auto;justify-content:flex-start;padding-bottom:12px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;}
-  .shop-card{flex-shrink:0;scroll-snap-align:start;}
-}
-
-/* ── SMALL (mobile ≤768px) ── */
-@media(max-width:768px){
-  body{overflow-x:hidden;}
-  header{height:auto;padding:16px 18px;flex-direction:column;align-items:flex-start;gap:10px;}
-  #matrix-bg{display:none;}
-  .header-logo{height:72px;}
-  .header-tagline{font-size:26px;}
-  .header-brand{font-size:10px;}
-  .header-nav{gap:8px;flex-wrap:wrap;}
-  .header-nav>a:not(.header-phone){font-size:9px;letter-spacing:1.5px;}
-  .header-phone{font-size:9px;padding:6px 11px;letter-spacing:1px;}
-  .section{padding:36px 16px;}
-  .section-title{font-size:26px;}
-  .section-sub{font-size:12px;margin-bottom:28px;}
-  .section-label{font-size:9px;}
-  .cards-row{overflow-x:auto;justify-content:flex-start;padding-bottom:14px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;gap:14px;}
-  .nl-card{width:210px;flex-shrink:0;scroll-snap-align:start;}
-  .services-grid{grid-template-columns:1fr;max-width:360px;margin:0 auto;gap:14px;}
-  .svc-card{width:100% !important;}
-  .bday-card{width:100% !important;}
-  .shop-row{overflow-x:auto;justify-content:flex-start;padding-bottom:14px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;gap:14px;}
-  .shop-card{width:230px;flex-shrink:0;scroll-snap-align:start;}
-  .stat-num{font-size:20px;}
-}
-
 /* ── NEWSLETTER CARDS ── */
 .cards-row{display:flex;gap:20px;justify-content:center;}
 .nl-card{
@@ -224,6 +182,54 @@ header{
 .btn-st{flex:1;text-align:center;background:var(--red);color:#fff;padding:9px;border-radius:6px;font-size:9px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;}
 .btn-notify{display:inline-block;width:100%;text-align:center;background:#f0ece4;color:#aaa;padding:9px;border-radius:6px;font-size:9px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;}
 .in-stock{position:absolute;top:10px;right:10px;background:#16a34a;color:#fff;font-size:7px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:999px;}
+
+/* ── MEDIUM (tablet 769–1199px) ── */
+@media(min-width:769px) and (max-width:1199px){
+  header{padding:0 32px;height:180px;}
+  .header-logo{height:140px;}
+  .header-tagline{font-size:40px;}
+  .header-nav{gap:16px;}
+  .header-phone{font-size:9px;padding:7px 12px;}
+  .section{padding:52px 28px;}
+  .section-title{font-size:32px;}
+  .cards-row{overflow-x:auto;justify-content:flex-start;padding-bottom:12px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;}
+  .nl-card{flex-shrink:0;scroll-snap-align:start;}
+  .services-grid{grid-template-columns:repeat(2,minmax(0,300px));max-width:680px;margin:0 auto;}
+  .svc-card{width:100%;}
+  .shop-row{overflow-x:auto;justify-content:flex-start;padding-bottom:12px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;}
+  .shop-card{flex-shrink:0;scroll-snap-align:start;}
+}
+
+/* ── SMALL (mobile ≤768px) ── */
+@media(max-width:768px){
+  *{box-sizing:border-box;}
+  html,body{overflow-x:hidden;width:100%;}
+  header{height:auto;padding:14px 16px;flex-direction:column;align-items:flex-start;gap:8px;}
+  #matrix-bg{display:none;}
+  .header-logo{height:68px;}
+  .header-tagline{font-size:24px;}
+  .header-brand{font-size:9px;}
+  .header-nav{gap:8px;flex-wrap:wrap;}
+  .header-nav>a[href="#newsletters"],
+  .header-nav>a[href="#services"],
+  .header-nav>a[href="#shop"]{display:none;}
+  .header-phone{font-size:10px;padding:7px 13px;letter-spacing:1px;}
+  .section{padding:32px 14px;overflow:hidden;}
+  .section-dark{overflow:hidden;}
+  .section-title{font-size:24px;}
+  .section-sub{font-size:12px;margin-bottom:22px;}
+  .section-label{font-size:9px;}
+  .cards-row{overflow-x:auto;overflow-y:visible;justify-content:flex-start;padding-bottom:14px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;gap:12px;width:100%;}
+  .nl-card{width:210px;min-width:210px;flex-shrink:0;scroll-snap-align:start;}
+  .services-grid{grid-template-columns:1fr;width:100%;max-width:100%;gap:12px;}
+  .svc-card{width:100%;box-sizing:border-box;}
+  .bday-card{width:100%;box-sizing:border-box;}
+  .shop-row{overflow-x:auto;overflow-y:visible;justify-content:flex-start;padding-bottom:14px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;gap:12px;width:100%;}
+  .shop-card{width:220px;min-width:220px;flex-shrink:0;scroll-snap-align:start;}
+  .cta-strip{padding:28px 16px !important;}
+  .cta-strip a{font-size:16px !important;padding:12px 20px !important;}
+  .cta-strip div:first-child{font-size:22px !important;}
+}
 </style>
 </head>
 <body>
@@ -334,7 +340,7 @@ header{
   <p class="section-sub section-sub-light">Automation, websites, and intelligence tools built to make you money.</p>
   <div class="services-grid">
 
-    <div class="svc-card" style="width:300px;">
+    <div class="svc-card">
       <div class="svc-icon">&#129302;</div>
       <div class="svc-name">AI Agents</div>
       <div class="svc-desc">Custom automation built to run itself. Set it once, done forever.</div>
@@ -347,7 +353,7 @@ header{
       <a href="mailto:frostbytehero@gmail.com?subject=AI Agent Inquiry" class="svc-btn" style="display:inline-block;margin-top:14px;">Custom Agent &rarr;</a>
     </div>
 
-    <div class="svc-card" style="width:300px;">
+    <div class="svc-card">
       <div class="svc-icon">&#127760;</div>
       <div class="svc-name">Websites</div>
       <div class="svc-desc">Fast, sharp, built to convert. Landing pages to full builds.</div>
@@ -360,7 +366,7 @@ header{
       <a href="mailto:frostbytehero@gmail.com?subject=Website Inquiry" class="svc-btn" style="display:inline-block;margin-top:14px;">Get a Quote &rarr;</a>
     </div>
 
-    <div class="svc-card" style="width:300px;">
+    <div class="svc-card">
       <div class="svc-icon">&#128241;</div>
       <div class="svc-name">Apps</div>
       <div class="svc-desc">Custom web &amp; mobile apps built to solve real problems.</div>
@@ -373,7 +379,7 @@ header{
       <a href="mailto:frostbytehero@gmail.com?subject=App Inquiry" class="svc-btn" style="display:inline-block;margin-top:14px;">Get a Quote &rarr;</a>
     </div>
 
-    <div class="svc-card" style="width:300px;">
+    <div class="svc-card">
       <div class="svc-icon">&#128293;</div>
       <div class="svc-name">Marketing Tools</div>
       <div class="svc-desc">Flyers, email campaigns, promos &amp; social content built to drive traffic.</div>
@@ -390,7 +396,7 @@ header{
 </div>
 
 <!-- CTA STRIP -->
-<div style="background:var(--red);padding:36px 40px;text-align:center;">
+<div class="cta-strip" style="background:var(--red);padding:36px 40px;text-align:center;">
   <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:#fff;margin-bottom:8px;">Ready to work together?</div>
   <div style="font-size:13px;color:rgba(255,255,255,.7);margin-bottom:20px;letter-spacing:.5px;">Newsletters &middot; AI Agents &middot; Websites &middot; Apps &middot; Marketing &mdash; let&rsquo;s talk.</div>
   <a href="tel:8593965538" style="display:inline-block;background:#fff;color:var(--red);padding:14px 36px;border-radius:6px;font-family:'Playfair Display',serif;font-size:22px;font-weight:900;text-decoration:none;letter-spacing:1px;white-space:nowrap;max-width:100%;box-sizing:border-box;">Call JStout &mdash; (859) 396-5538</a>
