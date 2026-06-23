@@ -213,6 +213,7 @@ header{
     <a href="#newsletters">Newsletters</a>
     <a href="#services">Services</a>
     <a href="#shop">Marketplace</a>
+    <a href="tel:8593965538" style="font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);text-decoration:none;border:2px solid var(--red);padding:9px 18px;border-radius:4px;">&#128222; (859) 396-5538</a>
     <a href="https://jstout-bday.onrender.com/admin/shop" target="_blank" style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,0,0,.3);text-decoration:none;border:1px solid rgba(0,0,0,.15);padding:8px 14px;border-radius:4px;">&#128274; Admin</a>
   </nav>
 </header>
@@ -359,6 +360,13 @@ header{
   </div>
 </div>
 
+<!-- CTA STRIP -->
+<div style="background:var(--red);padding:36px 40px;text-align:center;">
+  <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:#fff;margin-bottom:8px;">Ready to work together?</div>
+  <div style="font-size:13px;color:rgba(255,255,255,.7);margin-bottom:20px;letter-spacing:.5px;">Newsletters &middot; AI Agents &middot; Websites &middot; Apps &middot; Marketing &mdash; let&rsquo;s talk.</div>
+  <a href="tel:8593965538" style="display:inline-block;background:#fff;color:var(--red);padding:14px 36px;border-radius:6px;font-family:'Playfair Display',serif;font-size:22px;font-weight:900;text-decoration:none;letter-spacing:1px;">Call JStout &mdash; (859) 396-5538</a>
+</div>
+
 <!-- MARKETPLACE -->
 <div class="section" id="shop">
   <div class="section-label">Shop</div>
@@ -367,6 +375,15 @@ header{
   <div class="shop-row" id="shop-row">
     <div style="text-align:center;width:100%;color:#aaa;padding:40px;font-size:14px;">Loading products...</div>
   </div>
+</div>
+
+<!-- FOOTER -->
+<div style="background:#111;border-top:3px solid var(--red);padding:40px;text-align:center;">
+  <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:#fff;margin-bottom:6px;">JStout Inc</div>
+  <div style="font-size:11px;color:rgba(255,255,255,.3);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Kentucky Built &amp; Based</div>
+  <a href="tel:8593965538" style="display:inline-block;font-size:18px;font-weight:800;color:var(--red);text-decoration:none;letter-spacing:1px;">(859) 396-5538</a>
+  <div style="margin-top:6px;font-size:11px;color:rgba(255,255,255,.2);">Call or text anytime</div>
+  <div style="margin-top:24px;font-size:10px;color:rgba(255,255,255,.15);letter-spacing:1px;">&copy; 2026 JStout Inc. All rights reserved.</div>
 </div>
 
 <script>
