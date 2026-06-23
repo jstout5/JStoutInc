@@ -57,17 +57,22 @@ header{
   align-items:center;
   justify-content:space-between;
   border-bottom:3px solid var(--red);
+  position:relative;
+  overflow:hidden;
 }
-.header-left{display:flex;align-items:center;gap:30px;}
+#matrix-bg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}
+.header-left{display:flex;align-items:center;gap:30px;position:relative;z-index:1;}
 .header-logo{height:180px;width:auto;}
 .header-text{}
 .header-brand{font-size:12px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:6px;}
 .header-tagline{font-family:'Playfair Display',serif;font-size:56px;font-weight:900;line-height:1;color:var(--dark);}
 .header-tagline span{color:var(--red);}
-.header-nav{display:flex;align-items:center;gap:32px;}
-.header-nav a{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--dark);text-decoration:none;opacity:.6;transition:opacity .2s;}
+.header-nav{display:flex;align-items:center;gap:24px;position:relative;z-index:1;}
+.header-nav a{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--dark);text-decoration:none;opacity:.6;transition:opacity .2s;white-space:nowrap;}
 .header-nav a:hover{opacity:1;}
 .header-cta{background:var(--red);color:#fff;padding:10px 22px;border-radius:4px;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;text-decoration:none;}
+.header-phone{display:inline-block;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--red) !important;opacity:1 !important;text-decoration:none;border:2px solid var(--red);padding:8px 16px;border-radius:4px;white-space:nowrap;transition:background .2s,color .2s !important;}
+.header-phone:hover{background:var(--red) !important;color:#fff !important;}
 
 /* ── STATS BAR ── */
 .stats-bar{background:var(--red);padding:18px 40px;display:flex;justify-content:center;gap:80px;}
@@ -202,6 +207,7 @@ header{
 
 <!-- HEADER -->
 <header>
+  <canvas id="matrix-bg"></canvas>
   <div class="header-left">
     <img src="LOGO" class="header-logo" alt="JStout Inc">
     <div class="header-text">
@@ -213,7 +219,7 @@ header{
     <a href="#newsletters">Newsletters</a>
     <a href="#services">Services</a>
     <a href="#shop">Marketplace</a>
-    <a href="tel:8593965538" style="font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);text-decoration:none;border:2px solid var(--red);padding:9px 18px;border-radius:4px;">&#128222; (859) 396-5538</a>
+    <a href="tel:8593965538" class="header-phone">&#128222;&nbsp;(859)&nbsp;396-5538</a>
     <a href="https://jstout-bday.onrender.com/admin/shop" target="_blank" style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,0,0,.3);text-decoration:none;border:1px solid rgba(0,0,0,.15);padding:8px 14px;border-radius:4px;">&#128274; Admin</a>
   </nav>
 </header>
@@ -376,6 +382,38 @@ header{
     <div style="text-align:center;width:100%;color:#aaa;padding:40px;font-size:14px;">Loading products...</div>
   </div>
 </div>
+
+<!-- MATRIX BG SCRIPT -->
+<script>
+(function(){
+  var c=document.getElementById('matrix-bg');
+  var ctx=c.getContext('2d');
+  var chars='01001101011010100110000101110010011010110110010101110100';
+  var fs=13, cols, drops;
+  function init(){
+    c.width=c.offsetWidth; c.height=c.offsetHeight;
+    cols=Math.floor(c.width/fs);
+    drops=[];
+    for(var i=0;i<cols;i++) drops[i]=Math.random()*-50|0;
+  }
+  init();
+  window.addEventListener('resize',init);
+  function draw(){
+    ctx.fillStyle='rgba(245,240,232,0.18)';
+    ctx.fillRect(0,0,c.width,c.height);
+    ctx.font=fs+'px monospace';
+    for(var i=0;i<drops.length;i++){
+      var ch=chars[Math.floor(Math.random()*chars.length)];
+      var fade=drops[i]/cols;
+      ctx.fillStyle='rgba(200,16,46,'+(0.03+fade*0.05)+')';
+      ctx.fillText(ch,i*fs,drops[i]*fs);
+      if(drops[i]*fs>c.height&&Math.random()>0.97) drops[i]=0;
+      drops[i]++;
+    }
+  }
+  setInterval(draw,90);
+})();
+</script>
 
 <!-- FOOTER -->
 <div style="background:#111;border-top:3px solid var(--red);padding:40px;text-align:center;">
