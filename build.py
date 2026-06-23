@@ -34,8 +34,6 @@ previews = {
     'odds':  pdf_preview_b64(latest_pdf(r'C:\Users\frost\OddsNewsletter', 'newsletter_*.pdf')),
     'house': pdf_preview_b64(latest_pdf(r'C:\Users\frost\JStoutHouse',    'JStoutHouse_*.pdf')),
 }
-fall_flyer  = pdf_preview_b64(r'C:\Users\frost\BrushyCreek\promos\BrushyCreek_FallHunt_2026.pdf')
-bible_img   = img_b64(r'C:\Users\frost\JStoutInc\bible_preview.png')
 print("PDFs rendered.")
 
 html = """<!DOCTYPE html>
@@ -136,7 +134,8 @@ header{
 .nl-preview{width:100%;height:120px;object-fit:cover;object-position:top;border-top:1px solid rgba(0,0,0,.06);}
 
 /* ── SERVICES ── */
-.services-grid{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
+.services-grid{display:grid;grid-template-columns:repeat(4,300px);gap:20px;justify-content:center;}
+.svc-preview-img{width:100%;height:150px;object-fit:cover;object-position:top;border-radius:6px;display:block;margin-bottom:8px;}
 .bday-card{
   background:rgba(200,16,46,.08);
   border:2px solid rgba(200,16,46,.35);
@@ -347,8 +346,7 @@ header{
       <div style="margin-top:14px;padding:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;">
         <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px;">&#9733; Recent Work</div>
         <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">&#9997; Bible Reading App</div>
-        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:8px;">Daily reading tracker &amp; verse journal.</div>
-        <img src="BIBLE_IMG" style="width:100%;border-radius:6px;display:block;margin-bottom:8px;">
+        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:10px;">Daily reading tracker &amp; verse journal.</div>
         <a href="bible_mock.html" target="_blank" style="display:inline-block;background:rgba(255,255,255,.1);color:#fff;padding:6px 14px;border-radius:5px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;">View App &rarr;</a>
       </div>
       <a href="mailto:frostbytehero@gmail.com?subject=App Inquiry" class="svc-btn" style="display:inline-block;margin-top:14px;">Get a Quote &rarr;</a>
@@ -361,8 +359,7 @@ header{
       <div style="margin-top:14px;padding:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;">
         <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px;">&#9733; Recent Work</div>
         <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">&#127807; Brushy Creek Fall Hunt</div>
-        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:8px;">Promo flyer — designed, printed &amp; sold.</div>
-        <img src="FALL_FLYER" style="width:100%;border-radius:6px;display:block;margin-bottom:8px;">
+        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:10px;">Promo flyer — designed, printed &amp; sold.</div>
         <a href="fall-hunt-2026.html" target="_blank" style="display:inline-block;background:rgba(255,255,255,.1);color:#fff;padding:6px 14px;border-radius:5px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;">View Flyer &rarr;</a>
       </div>
       <a href="mailto:frostbytehero@gmail.com?subject=Marketing Inquiry" class="svc-btn" style="display:inline-block;margin-top:14px;">Get a Quote &rarr;</a>
@@ -424,8 +421,6 @@ fetch(API)
 
 html = (html
     .replace("LOGO",          logo)
-    .replace("FALL_FLYER",    fall_flyer)
-    .replace("BIBLE_IMG",     bible_img)
     .replace("IMG_BULLDOG",   bulldog)
     .replace("IMG_HORSE",     horse)
     .replace("IMG_MLB",       mlb_img)
