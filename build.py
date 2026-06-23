@@ -34,7 +34,8 @@ previews = {
     'odds':  pdf_preview_b64(latest_pdf(r'C:\Users\frost\OddsNewsletter', 'newsletter_*.pdf')),
     'house': pdf_preview_b64(latest_pdf(r'C:\Users\frost\JStoutHouse',    'JStoutHouse_*.pdf')),
 }
-fall_flyer = pdf_preview_b64(r'C:\Users\frost\BrushyCreek\promos\BrushyCreek_FallHunt_2026.pdf')
+fall_flyer  = pdf_preview_b64(r'C:\Users\frost\BrushyCreek\promos\BrushyCreek_FallHunt_2026.pdf')
+bible_img   = img_b64(r'C:\Users\frost\JStoutInc\bible_preview.png')
 print("PDFs rendered.")
 
 html = """<!DOCTYPE html>
@@ -158,7 +159,7 @@ header{
   background:rgba(255,255,255,.04);
   border:1px solid rgba(255,255,255,.08);
   border-radius:14px;padding:24px;
-  width:185px;
+  width:300px;
   transition:transform .2s,background .2s;
   position:relative;overflow:hidden;
 }
@@ -339,11 +340,17 @@ header{
       <a href="mailto:frostbytehero@gmail.com?subject=Website Inquiry" class="svc-btn" style="display:inline-block;margin-top:14px;">Get a Quote &rarr;</a>
     </div>
 
-    <div class="svc-card">
-      <div class="svc-icon">&#9889;</div>
-      <div class="svc-name">Performance</div>
-      <div class="svc-desc">Speed audits &amp; Core Web Vitals. Make it fast enough to rank.</div>
-      <a href="mailto:frostbytehero@gmail.com?subject=Performance Inquiry" class="svc-btn">Get a Quote &rarr;</a>
+    <div class="svc-card" style="width:300px;">
+      <div class="svc-icon">&#128241;</div>
+      <div class="svc-name">Apps</div>
+      <div class="svc-desc">Custom web &amp; mobile apps built to solve real problems.</div>
+      <div style="margin-top:14px;padding:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;">
+        <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;">&#9733; Recent Work</div>
+        <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">&#9997; Bible Reading App</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:10px;">Daily reading tracker &amp; verse journal.</div>
+        <img src="BIBLE_IMG" style="width:100%;border-radius:6px;display:block;">
+      </div>
+      <a href="mailto:frostbytehero@gmail.com?subject=App Inquiry" class="svc-btn" style="display:inline-block;margin-top:14px;">Get a Quote &rarr;</a>
     </div>
 
     <div class="svc-card" style="width:300px;">
@@ -416,6 +423,7 @@ fetch(API)
 html = (html
     .replace("LOGO",          logo)
     .replace("FALL_FLYER",    fall_flyer)
+    .replace("BIBLE_IMG",     bible_img)
     .replace("IMG_BULLDOG",   bulldog)
     .replace("IMG_HORSE",     horse)
     .replace("IMG_MLB",       mlb_img)
