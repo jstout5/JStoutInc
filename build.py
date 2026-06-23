@@ -51,18 +51,18 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 /* ── HEADER ── */
 header{
   background:var(--cream);
-  padding:0 40px;
-  height:120px;
+  padding:0 50px;
+  height:160px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   border-bottom:3px solid var(--red);
 }
-.header-left{display:flex;align-items:center;gap:18px;}
-.header-logo{height:90px;width:auto;}
+.header-left{display:flex;align-items:center;gap:24px;}
+.header-logo{height:130px;width:auto;}
 .header-text{}
 .header-brand{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:4px;}
-.header-tagline{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;line-height:1;color:var(--dark);}
+.header-tagline{font-family:'Playfair Display',serif;font-size:44px;font-weight:900;line-height:1;color:var(--dark);}
 .header-tagline span{color:var(--red);}
 .header-nav{display:flex;align-items:center;gap:32px;}
 .header-nav a{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--dark);text-decoration:none;opacity:.6;transition:opacity .2s;}
@@ -86,8 +86,8 @@ header{
 
 /* ── MOBILE ── */
 @media(max-width:768px){
-  header{height:auto;padding:16px 20px;flex-direction:column;align-items:flex-start;gap:12px;}
-  .header-logo{height:60px;}
+  header{height:auto;padding:20px 20px;flex-direction:column;align-items:flex-start;gap:14px;}
+  .header-logo{height:80px;}
   .header-tagline{font-size:24px;}
   .header-nav{gap:16px;flex-wrap:wrap;}
   .header-cta{padding:8px 14px;font-size:10px;}
@@ -213,18 +213,9 @@ header{
     <a href="#newsletters">Newsletters</a>
     <a href="#services">Services</a>
     <a href="#shop">Marketplace</a>
-    <a href="bday.html" class="header-cta">B Day Agent</a>
     <a href="https://jstout-bday.onrender.com/admin/shop" target="_blank" style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,0,0,.3);text-decoration:none;border:1px solid rgba(0,0,0,.15);padding:8px 14px;border-radius:4px;">&#128274; Admin</a>
   </nav>
 </header>
-
-<!-- STATS BAR -->
-<div class="stats-bar">
-  <div class="stat"><div class="stat-num">5+</div><div class="stat-lbl">Newsletters</div></div>
-  <div class="stat"><div class="stat-num">$2</div><div class="stat-lbl">Starts At</div></div>
-  <div class="stat"><div class="stat-num">Daily</div><div class="stat-lbl">Delivery</div></div>
-  <div class="stat"><div class="stat-num">KY</div><div class="stat-lbl">Built &amp; Based</div></div>
-</div>
 
 <!-- NEWSLETTERS -->
 <div class="section" id="newsletters">
