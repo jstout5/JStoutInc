@@ -213,6 +213,7 @@ header{
     <a href="#services">Services</a>
     <a href="#shop">Marketplace</a>
     <a href="bday.html" class="header-cta">B Day Agent</a>
+    <a href="https://jstout-bday.onrender.com/admin/shop" target="_blank" style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,0,0,.3);text-decoration:none;border:1px solid rgba(0,0,0,.15);padding:8px 14px;border-radius:4px;">&#128274; Admin</a>
   </nav>
 </header>
 
@@ -324,11 +325,17 @@ header{
       <a href="mailto:frostbytehero@gmail.com?subject=AI Agent Inquiry" class="svc-btn" style="display:inline-block;margin-top:14px;">Custom Agent &rarr;</a>
     </div>
 
-    <div class="svc-card">
+    <div class="svc-card" style="width:300px;">
       <div class="svc-icon">&#127760;</div>
       <div class="svc-name">Websites</div>
       <div class="svc-desc">Fast, sharp, built to convert. Landing pages to full builds.</div>
-      <a href="mailto:frostbytehero@gmail.com?subject=Website Inquiry" class="svc-btn">Get a Quote &rarr;</a>
+      <div style="margin-top:14px;padding:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;">
+        <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px;">&#9733; Recent Work</div>
+        <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">&#127968; ChristyStout.com</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:10px;">Real estate site — clean, fast, built to generate leads.</div>
+        <a href="https://christystout.com" target="_blank" class="svc-btn" style="display:inline-block;background:rgba(255,255,255,.1);color:#fff;padding:6px 14px;border-radius:5px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;">View Site &rarr;</a>
+      </div>
+      <a href="mailto:frostbytehero@gmail.com?subject=Website Inquiry" class="svc-btn" style="display:inline-block;margin-top:14px;">Get a Quote &rarr;</a>
     </div>
 
     <div class="svc-card">
