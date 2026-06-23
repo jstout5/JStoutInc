@@ -388,7 +388,7 @@ header{
 (function(){
   var c=document.getElementById('matrix-bg');
   var ctx=c.getContext('2d');
-  var chars='01001101011010100110000101110010011010110110010101110100';
+  var chars='NBAMLBHORSEWALLSTREETCASHODDSHOUSE$JSTOUTKY';
   var fs=13, cols, drops;
   function init(){
     c.width=c.offsetWidth; c.height=c.offsetHeight;
