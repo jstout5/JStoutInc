@@ -3,7 +3,7 @@ services:
     name: jstout-bday
     runtime: python
     rootDir: bdayexecution
-    buildCommand: pip install -r requirements.txt && playwright install chromium
+    buildCommand: pip install -r requirements.txt && playwright install --no-deps chromium
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     plan: starter
     envVars:
