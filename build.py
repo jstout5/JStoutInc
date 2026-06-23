@@ -34,6 +34,7 @@ previews = {
     'odds':  pdf_preview_b64(latest_pdf(r'C:\Users\frost\OddsNewsletter', 'newsletter_*.pdf')),
     'house': pdf_preview_b64(latest_pdf(r'C:\Users\frost\JStoutHouse',    'JStoutHouse_*.pdf')),
 }
+fall_flyer = pdf_preview_b64(r'C:\Users\frost\BrushyCreek\promos\BrushyCreek_FallHunt_2026.pdf')
 print("PDFs rendered.")
 
 html = """<!DOCTYPE html>
@@ -345,11 +346,17 @@ header{
       <a href="mailto:frostbytehero@gmail.com?subject=Performance Inquiry" class="svc-btn">Get a Quote &rarr;</a>
     </div>
 
-    <div class="svc-card">
+    <div class="svc-card" style="width:300px;">
       <div class="svc-icon">&#128293;</div>
       <div class="svc-name">Marketing Tools</div>
       <div class="svc-desc">Flyers, email campaigns, promos &amp; social content built to drive traffic.</div>
-      <a href="mailto:frostbytehero@gmail.com?subject=Marketing Inquiry" class="svc-btn">Get a Quote &rarr;</a>
+      <div style="margin-top:14px;padding:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;">
+        <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;">&#9733; Recent Work</div>
+        <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">&#127807; Brushy Creek Fall Hunt</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:10px;">Promo flyer — designed, printed &amp; sold.</div>
+        <img src="FALL_FLYER" style="width:100%;border-radius:6px;display:block;">
+      </div>
+      <a href="mailto:frostbytehero@gmail.com?subject=Marketing Inquiry" class="svc-btn" style="display:inline-block;margin-top:14px;">Get a Quote &rarr;</a>
     </div>
 
   </div>
@@ -408,6 +415,7 @@ fetch(API)
 
 html = (html
     .replace("LOGO",          logo)
+    .replace("FALL_FLYER",    fall_flyer)
     .replace("IMG_BULLDOG",   bulldog)
     .replace("IMG_HORSE",     horse)
     .replace("IMG_MLB",       mlb_img)
