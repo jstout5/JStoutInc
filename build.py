@@ -34,7 +34,6 @@ previews = {
     'odds':  pdf_preview_b64(latest_pdf(r'C:\Users\frost\OddsNewsletter', 'newsletter_*.pdf')),
     'house': pdf_preview_b64(latest_pdf(r'C:\Users\frost\JStoutHouse',    'JStoutHouse_*.pdf')),
 }
-wm = "J S T O U T &nbsp;&nbsp;$ $ $&nbsp;&nbsp;" * 180
 print("PDFs rendered.")
 
 html = """<!DOCTYPE html>
@@ -61,7 +60,7 @@ header{
   position:relative;
   overflow:hidden;
 }
-#header-wm{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;font-family:'Courier New',monospace;font-size:13px;font-weight:700;color:rgba(200,16,46,0.18);letter-spacing:3px;line-height:2.5;padding:10px 14px;word-break:break-all;user-select:none;z-index:0;}
+#matrix-bg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}
 .header-left{display:flex;align-items:center;gap:30px;position:relative;z-index:1;}
 .header-logo{height:180px;width:auto;}
 .header-text{}
@@ -206,7 +205,7 @@ header{
   *{box-sizing:border-box;}
   html,body{overflow-x:hidden;width:100%;}
   header{height:auto;padding:14px 16px;flex-direction:column;align-items:flex-start;gap:8px;}
-  #header-wm{font-size:11px;letter-spacing:2px;}
+  #matrix-bg{display:none;}
   .header-logo{height:68px;}
   .header-tagline{font-size:24px;}
   .header-brand{font-size:9px;}
@@ -237,7 +236,7 @@ header{
 
 <!-- HEADER -->
 <header>
-  <div id="header-wm">HEADER_WM</div>
+  <canvas id="matrix-bg"></canvas>
   <div class="header-left">
     <img src="LOGO" class="header-logo" alt="JStout Inc">
     <div class="header-text">
@@ -413,6 +412,38 @@ header{
   </div>
 </div>
 
+<!-- MATRIX -->
+<script>
+(function(){
+  var c=document.getElementById('matrix-bg');
+  if(!c)return;
+  var ctx=c.getContext('2d');
+  var chars='JSTOUT$$$';
+  var fs=15,cols,drops;
+  function init(){
+    c.width=c.offsetWidth;c.height=c.offsetHeight;
+    cols=Math.floor(c.width/fs);
+    drops=[];
+    for(var i=0;i<cols;i++)drops[i]=Math.random()*-(c.height/fs)|0;
+  }
+  init();
+  window.addEventListener('resize',init);
+  function draw(){
+    ctx.fillStyle='rgba(245,240,232,0.15)';
+    ctx.fillRect(0,0,c.width,c.height);
+    ctx.font='bold '+fs+'px "Courier New",monospace';
+    ctx.fillStyle='rgba(200,16,46,0.35)';
+    for(var i=0;i<drops.length;i++){
+      var ch=chars[Math.floor(Math.random()*chars.length)];
+      ctx.fillText(ch,i*fs,drops[i]*fs);
+      if(drops[i]*fs>c.height&&Math.random()>0.975)drops[i]=0;
+      drops[i]++;
+    }
+  }
+  setInterval(draw,80);
+})();
+</script>
+
 <!-- FOOTER -->
 <div style="background:#111;border-top:3px solid var(--red);padding:40px;text-align:center;">
   <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:#fff;margin-bottom:6px;">JStout Inc</div>
@@ -464,7 +495,6 @@ fetch(API)
 </html>"""
 
 html = (html
-    .replace("HEADER_WM",     wm)
     .replace("LOGO",          logo)
     .replace("IMG_BULLDOG",   bulldog)
     .replace("IMG_HORSE",     horse)
