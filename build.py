@@ -5,7 +5,7 @@ def img_b64(path):
     with open(path, 'rb') as f:
         return 'data:image/png;base64,' + base64.b64encode(f.read()).decode()
 
-def pdf_preview_b64(pdf_path, dpi=150):
+def pdf_preview_b64(pdf_path, dpi=72):
     doc = fitz.open(str(pdf_path))
     page = doc[0]
     mat = fitz.Matrix(dpi/72, dpi/72)
@@ -42,352 +42,363 @@ html = """<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>JStout Inc — Your Edge in Every Market</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-:root{--red:#c8102e;--red2:#9e0c24;--cream:#f0eadb;--dark:#111;}
-html,body{height:100vh;overflow:hidden;display:flex;flex-direction:column;background:var(--cream);}
-body{font-family:"Segoe UI",system-ui,sans-serif;}
+:root{--red:#c8102e;--cream:#f5f0e8;--dark:#1a1a1a;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--dark);}
 
-/* ── BANNER ── */
-.banner{
-  flex:0 0 auto;
-  background:linear-gradient(90deg,var(--red) 0%,var(--red2) 100%);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 24px;height:68px;overflow:hidden;
+/* ── HEADER ── */
+header{
+  background:var(--cream);
+  padding:0 40px;
+  height:120px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:3px solid var(--red);
 }
-.banner-brand{display:flex;align-items:center;gap:14px;}
-.banner-logo{height:52px;width:auto;flex-shrink:0;filter:brightness(0) invert(1);opacity:.9;}
-.banner-left{display:flex;flex-direction:column;justify-content:center;}
-.banner-title{
-  font-family:'Playfair Display',serif;
-  font-size:26px;font-weight:900;color:#fff;
-  letter-spacing:-.5px;line-height:1;
-}
-.banner-sub{
-  font-family:'Cinzel',serif;font-size:7.5px;font-weight:700;
-  letter-spacing:3px;text-transform:uppercase;
-  color:rgba(255,255,255,.5);margin-top:4px;
-}
-.banner-nav{display:flex;gap:22px;align-items:center;}
-.banner-nav a{
-  font-family:'Cinzel',serif;font-size:8.5px;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;
-  color:rgba(255,255,255,.65);text-decoration:none;transition:color .2s;
-}
-.banner-nav a:hover{color:#fff;}
+.header-left{display:flex;align-items:center;gap:18px;}
+.header-logo{height:90px;width:auto;}
+.header-text{}
+.header-brand{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:4px;}
+.header-tagline{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;line-height:1;color:var(--dark);}
+.header-tagline span{color:var(--red);}
+.header-nav{display:flex;align-items:center;gap:32px;}
+.header-nav a{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--dark);text-decoration:none;opacity:.6;transition:opacity .2s;}
+.header-nav a:hover{opacity:1;}
+.header-cta{background:var(--red);color:#fff;padding:10px 22px;border-radius:4px;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;text-decoration:none;}
 
-/* ── CONTENT ROWS ── */
-.rows{flex:1;display:flex;flex-direction:column;gap:0;min-height:0;overflow:hidden;}
-.row-wrap{flex:1;display:flex;flex-direction:column;min-height:0;border-bottom:1px solid rgba(0,0,0,.07);}
-.row-label{
-  flex:0 0 auto;padding:8px 20px 0;
-  font-family:'Cinzel',serif;font-size:7px;font-weight:700;
-  letter-spacing:3.5px;text-transform:uppercase;color:rgba(40,20,0,.28);
-}
-.row-cards{flex:1;display:flex;gap:10px;padding:8px 20px 10px;min-height:0;overflow:hidden;}
+/* ── STATS BAR ── */
+.stats-bar{background:var(--red);padding:18px 40px;display:flex;justify-content:center;gap:80px;}
+.stat{text-align:center;}
+.stat-num{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:#fff;line-height:1;}
+.stat-lbl{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:3px;}
+
+/* ── SECTION WRAPPER ── */
+.section{padding:64px 40px;}
+.section-dark{background:#111;}
+.section-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);text-align:center;margin-bottom:10px;}
+.section-title{font-family:'Playfair Display',serif;font-size:38px;font-weight:900;text-align:center;margin-bottom:8px;}
+.section-title-light{color:#fff;}
+.section-sub{font-size:14px;color:#888;text-align:center;margin-bottom:40px;}
+.section-sub-light{color:rgba(255,255,255,.4);}
 
 /* ── NEWSLETTER CARDS ── */
+.cards-row{display:flex;gap:20px;justify-content:center;}
 .nl-card{
-  flex:1;background:#fff;border-radius:10px;
+  background:#fff;border-radius:14px;
   border:1px solid rgba(0,0,0,.07);
-  overflow:hidden;display:flex;
-  box-shadow:0 2px 12px rgba(0,0,0,.07);
-  transition:transform .18s,box-shadow .18s;
-  position:relative;min-width:0;
+  box-shadow:0 4px 20px rgba(0,0,0,.08);
+  width:240px;flex-shrink:0;
+  overflow:hidden;
+  transition:transform .2s,box-shadow .2s;
+  position:relative;
 }
-.nl-card:hover:not(.nl-soon){transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.12);}
-.nl-thumb{width:55px;flex-shrink:0;overflow:hidden;}
-.nl-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .5s;}
-.nl-card:hover .nl-thumb img{transform:scale(1.06);}
-.nl-body{flex:1;padding:10px 12px 8px;display:flex;flex-direction:column;justify-content:space-between;min-width:0;}
-.nl-name{font-family:'Cinzel',serif;font-size:9px;font-weight:800;color:var(--red);margin-bottom:3px;}
-.nl-desc{font-size:8.5px;color:#777;line-height:1.4;flex:1;}
-.nl-foot{display:flex;align-items:center;justify-content:space-between;margin-top:6px;}
-.nl-price{font-family:'Playfair Display',serif;font-size:15px;font-weight:900;color:var(--red);}
-.nl-price span{font-size:8px;color:#999;font-weight:400;}
-.nl-btn{background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;padding:4px 10px;border-radius:5px;font-size:7.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;}
-.nl-live{position:absolute;top:5px;left:5px;font-size:6px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:2px 5px;border-radius:999px;color:#fff;background:#16a34a;}
-.nl-soon{opacity:.45;pointer-events:none;}
-.nl-soon-tag{position:absolute;top:5px;right:5px;font-size:6px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:2px 5px;border-radius:999px;color:#fff;background:#bbb;}
-.nl-soon-btn{background:#ddd;color:#bbb;padding:4px 10px;border-radius:5px;font-size:7.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;}
+.nl-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.14);}
+.nl-card-soon{opacity:.5;pointer-events:none;}
+.nl-badge{position:absolute;top:12px;right:12px;font-size:7px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:999px;color:#fff;}
+.badge-live{background:#16a34a;}
+.badge-soon{background:#999;}
+.badge-hot{background:var(--red);}
+.nl-head{padding:20px 20px 12px;display:flex;align-items:center;gap:12px;}
+.nl-avatar{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--cream);}
+.nl-name{font-weight:800;font-size:15px;color:var(--dark);}
+.nl-freq{font-size:10px;color:#aaa;margin-top:2px;}
+.nl-body{padding:0 20px 16px;}
+.nl-desc{font-size:12px;color:#777;line-height:1.6;}
+.nl-footer{padding:14px 20px;border-top:1px solid rgba(0,0,0,.06);display:flex;align-items:center;justify-content:space-between;}
+.nl-price{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--red);}
+.nl-price span{font-size:11px;color:#aaa;font-weight:400;}
+.nl-btn{background:var(--red);color:#fff;padding:7px 14px;border-radius:6px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;}
+.nl-btn-soon{background:#e5e5e5;color:#aaa;padding:7px 14px;border-radius:6px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;}
+.nl-preview{width:100%;height:120px;object-fit:cover;object-position:top;border-top:1px solid rgba(0,0,0,.06);}
 
-/* ── SERVICES ROW ── */
-.row-wrap-dark{background:var(--dark);}
-.row-label-light{color:rgba(255,255,255,.25);}
-.svc-card{
-  flex:1;background:rgba(255,255,255,.04);border-radius:10px;
-  border:1px solid rgba(255,255,255,.07);
-  padding:14px 16px;display:flex;flex-direction:column;
-  position:relative;overflow:hidden;min-width:0;
-  transition:transform .18s,background .18s;
-}
-.svc-card:hover{transform:translateY(-2px);background:rgba(255,255,255,.07);}
-.svc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--red2));}
-.svc-icon{font-size:22px;margin-bottom:7px;}
-.svc-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:900;color:#fff;margin-bottom:4px;}
-.svc-desc{font-size:9px;color:rgba(255,255,255,.4);line-height:1.5;flex:1;}
-.svc-cta{display:inline-block;margin-top:10px;background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;padding:5px 12px;border-radius:5px;font-family:'Cinzel',serif;font-size:7px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;}
-
-/* B Day featured in services row */
+/* ── SERVICES ── */
+.services-grid{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
 .bday-card{
-  flex:1.5;background:rgba(200,16,46,.06);border-radius:10px;
-  border:2px solid rgba(200,16,46,.3);
-  padding:14px 16px;display:flex;flex-direction:column;
-  position:relative;min-width:0;
-  transition:transform .18s,box-shadow .18s;
-  box-shadow:0 4px 20px rgba(200,16,46,.12);
+  background:rgba(200,16,46,.08);
+  border:2px solid rgba(200,16,46,.35);
+  border-radius:14px;padding:28px;
+  width:320px;position:relative;
+  box-shadow:0 8px 32px rgba(200,16,46,.15);
+  transition:transform .2s;
 }
-.bday-card:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(200,16,46,.2);}
-.bday-new{position:absolute;top:6px;right:6px;font-size:6px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:2px 6px;border-radius:999px;color:#fff;background:var(--red);}
-.bday-hook{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;font-style:italic;color:rgba(200,16,46,.8);margin-bottom:2px;}
-.bday-name{font-family:'Cinzel',serif;font-size:9px;font-weight:900;color:var(--red);letter-spacing:.5px;margin-bottom:6px;}
-.bday-desc{font-size:9px;color:rgba(255,255,255,.45);line-height:1.5;flex:1;}
-.bday-foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;}
-.bday-price{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:#fff;}
-.bday-price span{font-size:9px;color:rgba(255,255,255,.4);font-weight:400;}
-.bday-btn{background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;padding:7px 14px;border-radius:6px;font-family:'Cinzel',serif;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;box-shadow:0 3px 12px rgba(200,16,46,.4);}
+.bday-card:hover{transform:translateY(-4px);}
+.bday-new{position:absolute;top:14px;right:14px;background:var(--red);color:#fff;font-size:7px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:999px;}
+.bday-emoji{font-size:36px;margin-bottom:12px;}
+.bday-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:6px;}
+.bday-tagline{font-size:13px;color:rgba(255,255,255,.5);font-style:italic;margin-bottom:14px;}
+.bday-desc{font-size:12px;color:rgba(255,255,255,.4);line-height:1.7;margin-bottom:20px;}
+.bday-footer{display:flex;align-items:center;justify-content:space-between;}
+.bday-price{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:#fff;}
+.bday-price span{font-size:12px;color:rgba(255,255,255,.4);font-weight:400;}
+.bday-btn{background:var(--red);color:#fff;padding:10px 20px;border-radius:7px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;box-shadow:0 4px 14px rgba(200,16,46,.4);}
+.svc-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;padding:24px;
+  width:185px;
+  transition:transform .2s,background .2s;
+  position:relative;overflow:hidden;
+}
+.svc-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--red);}
+.svc-card:hover{transform:translateY(-4px);background:rgba(255,255,255,.07);}
+.svc-icon{font-size:28px;margin-bottom:12px;}
+.svc-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:#fff;margin-bottom:8px;}
+.svc-desc{font-size:11px;color:rgba(255,255,255,.4);line-height:1.6;margin-bottom:16px;}
+.svc-btn{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);text-decoration:none;}
 
-/* ── MARKETPLACE ROW ── */
+/* ── MARKETPLACE ── */
+.shop-row{display:flex;gap:20px;justify-content:center;}
 .shop-card{
-  flex:1;background:#fff;border-radius:10px;
+  background:#fff;border-radius:14px;
   border:1px solid rgba(0,0,0,.07);
-  overflow:hidden;display:flex;flex-direction:column;
-  box-shadow:0 2px 12px rgba(0,0,0,.07);
-  transition:transform .18s,box-shadow .18s;
-  position:relative;min-width:0;
+  box-shadow:0 4px 20px rgba(0,0,0,.08);
+  width:260px;overflow:hidden;
+  transition:transform .2s,box-shadow .2s;
+  position:relative;
 }
-.shop-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.12);}
-.shop-img{flex:1;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;}
+.shop-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.14);}
+.shop-img{height:160px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;}
 .shop-img-dark{background:linear-gradient(145deg,#0d0d0b,#1c1508);}
-.shop-img-ph{background:#f5f2ec;}
-.cj-lbl{font-family:'Cinzel',serif;font-size:9px;letter-spacing:4px;color:#c8941e;}
-.cj-yr{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:#fff;letter-spacing:-1px;}
-.cj-type{font-family:'Cinzel',serif;font-size:6.5px;letter-spacing:3px;color:rgba(200,148,30,.5);}
-.ph-lbl{font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.18);}
-.shop-foot{flex:0 0 auto;padding:8px 12px 10px;border-top:1px solid rgba(0,0,0,.05);}
-.shop-name{font-family:'Playfair Display',serif;font-size:11px;font-weight:700;color:#111;margin-bottom:1px;}
-.shop-sub{font-size:8px;color:#999;margin-bottom:7px;}
-.shop-price{font-family:'Playfair Display',serif;font-size:17px;font-weight:900;color:var(--red);margin-bottom:7px;}
-.shop-btns{display:flex;gap:6px;}
-.btn-paypal{flex:1;text-align:center;background:#0070ba;color:#fff;padding:6px;border-radius:5px;font-size:7px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;}
-.btn-stripe{flex:1;text-align:center;background:linear-gradient(135deg,var(--red),var(--red2));color:#fff;padding:6px;border-radius:5px;font-size:7px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;}
-.btn-notify{display:inline-block;background:rgba(0,0,0,.07);color:#888;padding:6px 14px;border-radius:5px;font-size:7px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;}
-.avail{position:absolute;top:6px;right:6px;font-size:6px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;border-radius:999px;color:#fff;background:#16a34a;}
+.shop-img-ph{background:#f0ece4;border-bottom:1px solid rgba(0,0,0,.06);}
+.cj-label{font-family:'Playfair Display',serif;font-size:10px;letter-spacing:5px;color:#c8941e;text-transform:uppercase;}
+.cj-year{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:#fff;}
+.cj-type{font-size:8px;letter-spacing:3px;color:rgba(200,148,30,.5);text-transform:uppercase;}
+.ph-text{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,.2);}
+.shop-body{padding:16px 18px;}
+.shop-name{font-weight:800;font-size:14px;margin-bottom:3px;}
+.shop-sub{font-size:11px;color:#999;margin-bottom:10px;}
+.shop-price{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--red);margin-bottom:12px;}
+.shop-btns{display:flex;gap:8px;}
+.btn-pp{flex:1;text-align:center;background:#0070ba;color:#fff;padding:9px;border-radius:6px;font-size:9px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;}
+.btn-st{flex:1;text-align:center;background:var(--red);color:#fff;padding:9px;border-radius:6px;font-size:9px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;}
+.btn-notify{display:inline-block;width:100%;text-align:center;background:#f0ece4;color:#aaa;padding:9px;border-radius:6px;font-size:9px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;}
+.in-stock{position:absolute;top:10px;right:10px;background:#16a34a;color:#fff;font-size:7px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:999px;}
 </style>
 </head>
 <body>
 
-<!-- BANNER -->
-<div class="banner">
-  <div class="banner-brand">
-    <img src="LOGO" class="banner-logo" alt="JStout Inc">
-    <div class="banner-left">
-      <div class="banner-title">Your Edge in Every Market</div>
-      <div class="banner-sub">Newsletters &nbsp;&middot;&nbsp; AI Agents &nbsp;&middot;&nbsp; Websites &nbsp;&middot;&nbsp; Shop</div>
+<!-- HEADER -->
+<header>
+  <div class="header-left">
+    <img src="LOGO" class="header-logo" alt="JStout Inc">
+    <div class="header-text">
+      <div class="header-brand">JStout Inc</div>
+      <div class="header-tagline">Your Edge in <span>Every Market</span></div>
     </div>
   </div>
-  <div class="banner-nav">
+  <nav class="header-nav">
     <a href="#newsletters">Newsletters</a>
     <a href="#services">Services</a>
-    <a href="#shop">Shop</a>
-    <a href="mailto:frostbytehero@gmail.com">Contact</a>
+    <a href="#shop">Marketplace</a>
+    <a href="bday.html" class="header-cta">B Day Agent</a>
+  </nav>
+</header>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">5+</div><div class="stat-lbl">Newsletters</div></div>
+  <div class="stat"><div class="stat-num">$2</div><div class="stat-lbl">Starts At</div></div>
+  <div class="stat"><div class="stat-num">Daily</div><div class="stat-lbl">Delivery</div></div>
+  <div class="stat"><div class="stat-num">KY</div><div class="stat-lbl">Built &amp; Based</div></div>
+</div>
+
+<!-- NEWSLETTERS -->
+<div class="section" id="newsletters">
+  <div class="section-label">Subscriptions</div>
+  <h2 class="section-title">Premium Newsletters</h2>
+  <p class="section-sub">Unlock the full report. Subscribe and get every issue delivered to your inbox.</p>
+  <div class="cards-row">
+
+    <div class="nl-card">
+      <span class="nl-badge badge-live">&#9679; Live</span>
+      <div class="nl-head">
+        <img src="BULLDOG" class="nl-avatar" alt="JStoutCash">
+        <div><div class="nl-name">JStoutCash</div><div class="nl-freq">Daily &middot; Stock Market</div></div>
+      </div>
+      <div class="nl-body"><div class="nl-desc">Daily stock market intelligence. 52-week lows, dividend plays, options flow &amp; top movers — before the bell.</div></div>
+      <div class="nl-footer">
+        <div class="nl-price">$2<span>/mo</span></div>
+        <a href="https://buy.stripe.com/4gM4gsfrn4Ar5T19lr5Rm00" target="_blank" class="nl-btn">Subscribe</a>
+      </div>
+      <img src="PREVIEW_CASH" class="nl-preview" alt="Preview">
+    </div>
+
+    <div class="nl-card nl-card-soon">
+      <span class="nl-badge badge-soon">Coming Soon</span>
+      <div class="nl-head">
+        <img src="HORSE" class="nl-avatar" alt="JStoutHorse">
+        <div><div class="nl-name">JStoutHorse</div><div class="nl-freq">Race Days &middot; Handicapping</div></div>
+      </div>
+      <div class="nl-body"><div class="nl-desc">Horse racing picks &amp; handicapping. Track conditions, pace analysis, trainer stats &amp; value overlays for every major race.</div></div>
+      <div class="nl-footer">
+        <div class="nl-price">$8<span>/mo</span></div>
+        <span class="nl-btn-soon">Coming Soon</span>
+      </div>
+      <img src="PREVIEW_HORSE" class="nl-preview" alt="Preview">
+    </div>
+
+    <div class="nl-card nl-card-soon">
+      <span class="nl-badge badge-soon">Coming Soon</span>
+      <div class="nl-head">
+        <img src="MLB" class="nl-avatar" alt="MLB">
+        <div><div class="nl-name">MLB Newsletter</div><div class="nl-freq">Daily &middot; Baseball</div></div>
+      </div>
+      <div class="nl-body"><div class="nl-desc">Daily baseball intelligence. Standings, hot bats, pitcher matchups, and value picks for the serious fan.</div></div>
+      <div class="nl-footer">
+        <div class="nl-price">$2<span>/mo</span></div>
+        <span class="nl-btn-soon">Coming Soon</span>
+      </div>
+      <img src="PREVIEW_MLB" class="nl-preview" alt="Preview">
+    </div>
+
+    <div class="nl-card nl-card-soon">
+      <span class="nl-badge badge-soon">Coming Soon</span>
+      <div class="nl-head">
+        <img src="HOUSE" class="nl-avatar" alt="JStoutHouse">
+        <div><div class="nl-name">JStoutHouse</div><div class="nl-freq">Weekly &middot; Real Estate</div></div>
+      </div>
+      <div class="nl-body"><div class="nl-desc">Market trends &amp; deal alerts for real estate investors. Find the edge before anyone else.</div></div>
+      <div class="nl-footer">
+        <div class="nl-price">$5<span>/mo</span></div>
+        <span class="nl-btn-soon">Coming Soon</span>
+      </div>
+      <img src="PREVIEW_HOUSE" class="nl-preview" alt="Preview">
+    </div>
+
+    <div class="nl-card nl-card-soon">
+      <span class="nl-badge badge-soon">Coming Soon</span>
+      <div class="nl-head">
+        <img src="BULLDOG" class="nl-avatar" alt="Odds">
+        <div><div class="nl-name">Odds Report</div><div class="nl-freq">Daily &middot; Betting</div></div>
+      </div>
+      <div class="nl-body"><div class="nl-desc">Sharp line movement &amp; value plays across all major sports leagues. Know where the money's going.</div></div>
+      <div class="nl-footer">
+        <div class="nl-price">$2<span>/mo</span></div>
+        <span class="nl-btn-soon">Coming Soon</span>
+      </div>
+      <img src="PREVIEW_ODDS" class="nl-preview" alt="Preview">
+    </div>
+
   </div>
 </div>
 
-<!-- ROWS -->
-<div class="rows">
+<!-- SERVICES -->
+<div class="section section-dark" id="services">
+  <div class="section-label">What We Do</div>
+  <h2 class="section-title section-title-light">Services &amp; AI</h2>
+  <p class="section-sub section-sub-light">Automation, websites, and intelligence tools built to make you money.</p>
+  <div class="services-grid">
 
-  <!-- ROW 1: NEWSLETTERS -->
-  <div class="row-wrap" id="newsletters">
-    <div class="row-label">Newsletters</div>
-    <div class="row-cards">
-
-      <div class="nl-card">
-        <span class="nl-live">&#9679; Live</span>
-        <div class="nl-thumb"><img src="PREVIEW_CASH" alt="JStoutCash"></div>
-        <div class="nl-body">
-          <div>
-            <div class="nl-name">&#128176; JStoutCash</div>
-            <div class="nl-desc">52-wk lows, dividends &amp; options flow before the bell.</div>
-          </div>
-          <div class="nl-foot">
-            <div class="nl-price">$2<span>/mo</span></div>
-            <a href="https://buy.stripe.com/4gM4gsfrn4Ar5T19lr5Rm00" target="_blank" class="nl-btn">Subscribe</a>
-          </div>
-        </div>
+    <div class="bday-card">
+      <span class="bday-new">&#9733; Featured</span>
+      <div class="bday-emoji">&#127874;</div>
+      <div class="bday-name">B Day Execution</div>
+      <div class="bday-tagline">Set it once. We handle everything.</div>
+      <div class="bday-desc">We search Walmart, buy the best gift in your budget, get it gift wrapped, and ship it 3 days before the birthday. Every year. Automatically.</div>
+      <div class="bday-footer">
+        <div class="bday-price">$30<span>/mo</span></div>
+        <a href="bday.html" class="bday-btn">Get Started</a>
       </div>
-
-      <div class="nl-card nl-soon">
-        <span class="nl-soon-tag">Coming Soon</span>
-        <div class="nl-thumb"><img src="PREVIEW_HORSE" alt="JStoutHorse"></div>
-        <div class="nl-body">
-          <div>
-            <div class="nl-name">&#127939; JStoutHorse</div>
-            <div class="nl-desc">Pace analysis &amp; value overlays every race day.</div>
-          </div>
-          <div class="nl-foot">
-            <div class="nl-price">$8<span>/mo</span></div>
-            <span class="nl-soon-btn">Coming Soon</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="nl-card nl-soon">
-        <span class="nl-soon-tag">Coming Soon</span>
-        <div class="nl-thumb"><img src="PREVIEW_MLB" alt="MLB"></div>
-        <div class="nl-body">
-          <div>
-            <div class="nl-name">&#9918; MLB Newsletter</div>
-            <div class="nl-desc">Hot bats, matchups &amp; value picks daily.</div>
-          </div>
-          <div class="nl-foot">
-            <div class="nl-price">$2<span>/mo</span></div>
-            <span class="nl-soon-btn">Coming Soon</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="nl-card nl-soon">
-        <span class="nl-soon-tag">Coming Soon</span>
-        <div class="nl-thumb"><img src="PREVIEW_ODDS" alt="Odds"></div>
-        <div class="nl-body">
-          <div>
-            <div class="nl-name">&#127922; Odds Report</div>
-            <div class="nl-desc">Sharp line movement &amp; value plays across all leagues.</div>
-          </div>
-          <div class="nl-foot">
-            <div class="nl-price">$2<span>/mo</span></div>
-            <span class="nl-soon-btn">Coming Soon</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="nl-card nl-soon">
-        <span class="nl-soon-tag">Coming Soon</span>
-        <div class="nl-thumb"><img src="PREVIEW_HOUSE" alt="JStoutHouse"></div>
-        <div class="nl-body">
-          <div>
-            <div class="nl-name">&#127968; JStoutHouse</div>
-            <div class="nl-desc">Market trends &amp; deal alerts for investors.</div>
-          </div>
-          <div class="nl-foot">
-            <div class="nl-price">$5<span>/mo</span></div>
-            <span class="nl-soon-btn">Coming Soon</span>
-          </div>
-        </div>
-      </div>
-
     </div>
-  </div>
 
-  <!-- ROW 2: SERVICES -->
-  <div class="row-wrap row-wrap-dark" id="services">
-    <div class="row-label row-label-light">Services &amp; AI</div>
-    <div class="row-cards">
-
-      <div class="bday-card">
-        <span class="bday-new">&#9733; New</span>
-        <div class="bday-hook">When's your next birthday?</div>
-        <div class="bday-name">&#127874; B Day Execution</div>
-        <div class="bday-desc">We search Walmart, buy the best gift in budget, get it wrapped &amp; ship it 3 days before the birthday. Set it once, done forever.</div>
-        <div class="bday-foot">
-          <div class="bday-price">$30<span>/mo</span></div>
-          <a href="bday.html" class="bday-btn">Get Started</a>
-        </div>
-      </div>
-
-      <div class="svc-card">
-        <div class="svc-icon">&#127760;</div>
-        <div class="svc-name">Websites</div>
-        <div class="svc-desc">Fast, sharp, built to convert. Landing pages to full builds.</div>
-        <a href="mailto:frostbytehero@gmail.com?subject=Website Inquiry" class="svc-cta">Get a Quote</a>
-      </div>
-
-      <div class="svc-card">
-        <div class="svc-icon">&#129302;</div>
-        <div class="svc-name">AI Agents</div>
-        <div class="svc-desc">Custom automation. Set it once, runs itself.</div>
-        <a href="mailto:frostbytehero@gmail.com?subject=AI Agent Inquiry" class="svc-cta">Get a Quote</a>
-      </div>
-
-      <div class="svc-card">
-        <div class="svc-icon">&#9889;</div>
-        <div class="svc-name">Performance</div>
-        <div class="svc-desc">Speed audits &amp; Core Web Vitals. Make it fast enough to rank.</div>
-        <a href="mailto:frostbytehero@gmail.com?subject=Performance Inquiry" class="svc-cta">Get a Quote</a>
-      </div>
-
-      <div class="svc-card">
-        <div class="svc-icon">&#128200;</div>
-        <div class="svc-name">SEO</div>
-        <div class="svc-desc">Technical SEO &amp; local search domination.</div>
-        <a href="mailto:frostbytehero@gmail.com?subject=SEO Inquiry" class="svc-cta">Get a Quote</a>
-      </div>
-
+    <div class="svc-card">
+      <div class="svc-icon">&#127760;</div>
+      <div class="svc-name">Websites</div>
+      <div class="svc-desc">Fast, sharp, built to convert. Landing pages to full builds.</div>
+      <a href="mailto:frostbytehero@gmail.com?subject=Website Inquiry" class="svc-btn">Get a Quote &rarr;</a>
     </div>
-  </div>
 
-  <!-- ROW 3: MARKETPLACE -->
-  <div class="row-wrap" id="shop">
-    <div class="row-label">Marketplace</div>
-    <div class="row-cards">
-
-      <!-- Cactus Jack -->
-      <div class="shop-card">
-        <span class="avail">In Stock</span>
-        <div class="shop-img shop-img-dark">
-          <div class="cj-lbl">Cactus Jack</div>
-          <div class="cj-yr">2025</div>
-          <div class="cj-type">NBA Hobby Box &middot; Factory Sealed</div>
-        </div>
-        <div class="shop-foot">
-          <div class="shop-name">Cactus Jack 2025 NBA Hobby Box</div>
-          <div class="shop-sub">Factory Sealed &middot; Travis Scott x NBA &middot; Ships Insured</div>
-          <div class="shop-price">$1,000</div>
-          <div class="shop-btns">
-            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=frostbytehero%40gmail.com&item_name=Cactus+Jack+2025+NBA+Hobby+Box&amount=1000.00&currency_code=USD&no_shipping=0" target="_blank" class="btn-paypal">PayPal</a>
-            <a href="mailto:frostbytehero@gmail.com?subject=Cactus Jack - Pay by Stripe" class="btn-stripe">Stripe</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="shop-card">
-        <div class="shop-img shop-img-ph"><div class="ph-lbl">Next Drop</div></div>
-        <div class="shop-foot">
-          <div class="shop-name" style="color:#ccc">Coming Soon</div>
-          <div class="shop-sub">More inventory loading</div>
-          <a href="mailto:frostbytehero@gmail.com?subject=Notify Me" class="btn-notify">Notify Me</a>
-        </div>
-      </div>
-
-      <div class="shop-card">
-        <div class="shop-img shop-img-ph"><div class="ph-lbl">Next Drop</div></div>
-        <div class="shop-foot">
-          <div class="shop-name" style="color:#ccc">Coming Soon</div>
-          <div class="shop-sub">More inventory loading</div>
-          <a href="mailto:frostbytehero@gmail.com?subject=Notify Me" class="btn-notify">Notify Me</a>
-        </div>
-      </div>
-
-      <div class="shop-card">
-        <div class="shop-img shop-img-ph"><div class="ph-lbl">Next Drop</div></div>
-        <div class="shop-foot">
-          <div class="shop-name" style="color:#ccc">Coming Soon</div>
-          <div class="shop-sub">More inventory loading</div>
-          <a href="mailto:frostbytehero@gmail.com?subject=Notify Me" class="btn-notify">Notify Me</a>
-        </div>
-      </div>
-
+    <div class="svc-card">
+      <div class="svc-icon">&#129302;</div>
+      <div class="svc-name">AI Agents</div>
+      <div class="svc-desc">Custom automation that runs itself. Set it once, done forever.</div>
+      <a href="mailto:frostbytehero@gmail.com?subject=AI Agent Inquiry" class="svc-btn">Get a Quote &rarr;</a>
     </div>
-  </div>
 
+    <div class="svc-card">
+      <div class="svc-icon">&#9889;</div>
+      <div class="svc-name">Performance</div>
+      <div class="svc-desc">Speed audits &amp; Core Web Vitals. Make it fast enough to rank.</div>
+      <a href="mailto:frostbytehero@gmail.com?subject=Performance Inquiry" class="svc-btn">Get a Quote &rarr;</a>
+    </div>
+
+    <div class="svc-card">
+      <div class="svc-icon">&#128200;</div>
+      <div class="svc-name">SEO</div>
+      <div class="svc-desc">Technical SEO &amp; local search domination.</div>
+      <a href="mailto:frostbytehero@gmail.com?subject=SEO Inquiry" class="svc-btn">Get a Quote &rarr;</a>
+    </div>
+
+  </div>
 </div>
+
+<!-- MARKETPLACE -->
+<div class="section" id="shop">
+  <div class="section-label">Shop</div>
+  <h2 class="section-title">Marketplace</h2>
+  <p class="section-sub">Premium inventory. Ships insured. Real deals.</p>
+  <div class="shop-row">
+
+    <div class="shop-card">
+      <span class="in-stock">In Stock</span>
+      <div class="shop-img shop-img-dark">
+        <div class="cj-label">Cactus Jack</div>
+        <div class="cj-year">2025</div>
+        <div class="cj-type">NBA Hobby Box</div>
+      </div>
+      <div class="shop-body">
+        <div class="shop-name">Cactus Jack 2025 NBA Hobby Box</div>
+        <div class="shop-sub">Factory Sealed &middot; Travis Scott x NBA &middot; Ships Insured</div>
+        <div class="shop-price">$1,000</div>
+        <div class="shop-btns">
+          <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=frostbytehero%40gmail.com&item_name=Cactus+Jack+2025+NBA+Hobby+Box&amount=1000.00&currency_code=USD" target="_blank" class="btn-pp">PayPal</a>
+          <a href="mailto:frostbytehero@gmail.com?subject=Cactus Jack - Stripe Payment" class="btn-st">Stripe</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="shop-card">
+      <div class="shop-img shop-img-ph"><div class="ph-text">Coming Soon</div></div>
+      <div class="shop-body">
+        <div class="shop-name" style="color:#ccc">Next Drop</div>
+        <div class="shop-sub">More inventory loading</div>
+        <a href="mailto:frostbytehero@gmail.com?subject=Notify Me" class="btn-notify">Notify Me</a>
+      </div>
+    </div>
+
+    <div class="shop-card">
+      <div class="shop-img shop-img-ph"><div class="ph-text">Coming Soon</div></div>
+      <div class="shop-body">
+        <div class="shop-name" style="color:#ccc">Next Drop</div>
+        <div class="shop-sub">More inventory loading</div>
+        <a href="mailto:frostbytehero@gmail.com?subject=Notify Me" class="btn-notify">Notify Me</a>
+      </div>
+    </div>
+
+    <div class="shop-card">
+      <div class="shop-img shop-img-ph"><div class="ph-text">Coming Soon</div></div>
+      <div class="shop-body">
+        <div class="shop-name" style="color:#ccc">Next Drop</div>
+        <div class="shop-sub">More inventory loading</div>
+        <a href="mailto:frostbytehero@gmail.com?subject=Notify Me" class="btn-notify">Notify Me</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 </body>
 </html>"""
 
 html = (html
     .replace("LOGO",          logo)
+    .replace("BULLDOG",       bulldog)
+    .replace("HORSE",         horse)
+    .replace("MLB",           mlb_img)
+    .replace("HOUSE",         house_img)
     .replace("PREVIEW_CASH",  previews['cash'])
     .replace("PREVIEW_HORSE", previews['horse'])
     .replace("PREVIEW_MLB",   previews['mlb'])
