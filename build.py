@@ -374,7 +374,7 @@ header{
         <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px;">&#9733; Recent Work</div>
         <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">&#9997; Bible Reading App</div>
         <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:10px;">Daily reading tracker &amp; verse journal.</div>
-        <a href="https://still-waters-scripture.onrender.com" target="_blank" style="display:inline-block;background:rgba(255,255,255,.1);color:#fff;padding:6px 14px;border-radius:5px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;">View App &rarr;</a>
+        <a href="bible_mock.html" target="_blank" style="display:inline-block;background:rgba(255,255,255,.1);color:#fff;padding:6px 14px;border-radius:5px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;">View App &rarr;</a>
       </div>
       <a href="mailto:frostbytehero@gmail.com?subject=App Inquiry" class="svc-btn" style="display:inline-block;margin-top:14px;">Get a Quote &rarr;</a>
     </div>
