@@ -277,7 +277,7 @@ header{
     <div class="nl-card">
       <span class="nl-badge badge-live">&#9679; Live</span>
       <div class="nl-head">
-        <img src="IMG_BULLDOG" class="nl-avatar" alt="JStoutCash">
+        <img src="LOGO" class="nl-avatar" alt="JStoutCash">
         <div><div class="nl-name">Wall Street Edge</div><div class="nl-freq">Daily &middot; Stock Market</div></div>
       </div>
       <div class="nl-body"><div class="nl-desc">Daily stock market intelligence. 52-week lows, dividend plays, options flow &amp; top movers — before the bell.</div></div>
