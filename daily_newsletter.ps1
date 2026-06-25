@@ -1,52 +1,34 @@
-# JStoutCash Daily Newsletter — generates PDF, rebuilds hub preview, pushes to GitHub
-# Scheduled daily at 9:00 AM
+﻿# JStoutCash Daily Newsletter — generate PDF, rebuild hub preview, push to GitHub
+$PYTHON    = "C:\Users\frost\AppData\Local\Python\pythoncore-3.14-64\python.exe"
+$LOG       = "C:\Users\frost\JStoutInc\daily_newsletter.log"
+$NL_SCRIPT = "C:\Users\frost\JStoutCash\tools\generate_newsletter.py"
+$BUILD     = "C:\Users\frost\JStoutInc\build.py"
+$REPO      = "C:\Users\frost\JStoutInc"
 
-$LogFile = "C:\Users\frost\JStoutInc\daily_newsletter.log"
-
-function Log($msg) {
-    $ts = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-    "$ts  $msg" | Out-File -Append -FilePath $LogFile -Encoding utf8
-}
+function Log { param([string]$msg); $ts = Get-Date -Format "yyyy-MM-dd HH:mm:ss"; Add-Content -Path $LOG -Value "$ts  $msg" -Encoding UTF8 }
 
 Log "========================================="
 Log "Starting daily newsletter update"
-
-# Step 1: Generate newsletter PDF
 Log "Generating newsletter PDF..."
-$out = & python "C:\Users\frost\JStoutCash\tools\generate_newsletter.py" 2>&1
-Log $out
-if ($LASTEXITCODE -ne 0) {
-    Log "ERROR: newsletter generation failed (exit $LASTEXITCODE)"
-    exit 1
-}
-Log "Newsletter PDF generated."
-
-# Step 2: Rebuild hub site — picks up new PDF for index.html preview + preview_cash.html
+& $PYTHON $NL_SCRIPT
+$code1 = $LASTEXITCODE
+Log "Newsletter exit code: $code1"
+if ($code1 -ne 0) { Log "ERROR: newsletter generation failed"; exit 1 }
 Log "Rebuilding hub site..."
-$out = & python "C:\Users\frost\JStoutInc\build.py" 2>&1
-Log $out
+& $PYTHON $BUILD
+$code2 = $LASTEXITCODE
+Log "Build exit code: $code2"
+if ($code2 -ne 0) { Log "ERROR: build.py failed"; exit 1 }
+Log "Committing changes..."
+Set-Location $REPO
+& git add index.html preview_cash.html
+& git diff --cached --quiet
 if ($LASTEXITCODE -ne 0) {
-    Log "ERROR: build.py failed (exit $LASTEXITCODE)"
-    exit 1
-}
-Log "Hub site rebuilt."
-
-# Step 3: Commit and push
-Log "Committing and pushing..."
-$date = Get-Date -Format "yyyy-MM-dd"
-Set-Location "C:\Users\frost\JStoutInc"
-git add index.html preview_cash.html
-git diff --cached --quiet
-if ($LASTEXITCODE -ne 0) {
-    git commit -m "Daily update $date"
-    git push
-    if ($LASTEXITCODE -eq 0) {
-        Log "Pushed to GitHub — Render will auto-deploy."
-    } else {
-        Log "ERROR: git push failed."
-    }
+    $d = Get-Date -Format "yyyy-MM-dd"
+    & git commit -m "Daily update $d"
+    & git push
+    if ($LASTEXITCODE -eq 0) { Log "Pushed to GitHub." } else { Log "ERROR: git push failed."; exit 1 }
 } else {
-    Log "No changes to commit."
+    Log "No changes — nothing to push."
 }
-
 Log "Done."
