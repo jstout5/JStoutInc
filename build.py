@@ -14,6 +14,17 @@ def pdf_preview_b64(pdf_path, dpi=72):
     doc.close()
     return 'data:image/png;base64,' + base64.b64encode(data).decode()
 
+def pdf_all_pages_b64(pdf_path, dpi=150):
+    doc = fitz.open(str(pdf_path))
+    mat = fitz.Matrix(dpi/72, dpi/72)
+    pages = []
+    for page in doc:
+        pix = page.get_pixmap(matrix=mat)
+        data = pix.tobytes("png")
+        pages.append('data:image/png;base64,' + base64.b64encode(data).decode())
+    doc.close()
+    return pages
+
 def latest_pdf(folder, pattern="*.pdf"):
     pdfs = sorted(Path(folder).glob(pattern), key=lambda p: p.stat().st_mtime, reverse=True)
     if not pdfs: raise FileNotFoundError(f"No PDFs in {folder}")
@@ -28,14 +39,15 @@ house_img = img_b64(r'C:\Users\frost\BrushyCreek\assets\images\jstouthouse.png')
 nba_img   = img_b64(r'C:\Users\frost\BrushyCreek\assets\images\jstoutnba.png')
 
 cash_pdf = latest_pdf(r'C:\Users\frost\JStoutCash', 'JStoutCash_*.pdf')
+cash_pages = pdf_all_pages_b64(cash_pdf)
 previews = {
-    'cash':  pdf_preview_b64(cash_pdf),
+    'cash':  cash_pages[0],
     'horse': pdf_preview_b64(latest_pdf(r'C:\Users\frost\JStoutHorse',    'JStoutHorse_Report_*.pdf')),
     'mlb':   pdf_preview_b64(latest_pdf(r'C:\Users\frost\MLBNewsletter',  'newsletter_*.pdf')),
     'odds':  pdf_preview_b64(latest_pdf(r'C:\Users\frost\OddsNewsletter', 'newsletter_*.pdf')),
     'house': pdf_preview_b64(latest_pdf(r'C:\Users\frost\JStoutHouse',    'JStoutHouse_*.pdf')),
 }
-cash_full = pdf_preview_b64(cash_pdf, dpi=150)
+cash_full = cash_pages  # all pages already at 150 dpi
 print("PDFs rendered.")
 
 html = """<!DOCTYPE html>
@@ -533,7 +545,7 @@ nav{{background:#111;border-bottom:3px solid var(--red);padding:14px 28px;displa
 .kicker{{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:10px;}}
 h1{{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--dark);margin-bottom:6px;}}
 .sub{{font-size:14px;color:#888;margin-bottom:28px;}}
-.preview-img{{width:100%;border-radius:10px;box-shadow:0 8px 48px rgba(0,0,0,.18);border:1px solid rgba(0,0,0,.08);}}
+.preview-img{{width:100%;border-radius:10px;box-shadow:0 8px 48px rgba(0,0,0,.18);border:1px solid rgba(0,0,0,.08);display:block;margin-bottom:16px;}}
 .cta-box{{margin-top:40px;background:#111;border-radius:14px;padding:36px;text-align:center;}}
 .cta-box h2{{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:8px;}}
 .cta-box p{{font-size:13px;color:rgba(255,255,255,.45);margin-bottom:24px;}}
@@ -557,7 +569,7 @@ h1{{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:va
   <div class="kicker">Wall Street Edge &mdash; Sample Issue</div>
   <h1>Free Preview</h1>
   <p class="sub">Daily stock market intelligence. 52-week lows, dividend plays, options flow &amp; top movers &mdash; before the bell.</p>
-  <img src="{cash_full}" class="preview-img" alt="Wall Street Edge Preview">
+  {''.join(f'<img src="{p}" class="preview-img" alt="Page {i+1}">' for i, p in enumerate(cash_full))}
   <div class="cta-box">
     <h2>Like what you see?</h2>
     <p>Get every issue delivered to your inbox every morning for just&nbsp;&mdash;</p>
