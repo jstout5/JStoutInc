@@ -27,13 +27,15 @@ mlb_img   = img_b64(r'C:\Users\frost\BrushyCreek\assets\images\jstoutmlb.png')
 house_img = img_b64(r'C:\Users\frost\BrushyCreek\assets\images\jstouthouse.png')
 nba_img   = img_b64(r'C:\Users\frost\BrushyCreek\assets\images\jstoutnba.png')
 
+cash_pdf = latest_pdf(r'C:\Users\frost\JStoutCash', 'JStoutCash_*.pdf')
 previews = {
-    'cash':  pdf_preview_b64(latest_pdf(r'C:\Users\frost\JStoutCash',     'JStoutCash_*.pdf')),
+    'cash':  pdf_preview_b64(cash_pdf),
     'horse': pdf_preview_b64(latest_pdf(r'C:\Users\frost\JStoutHorse',    'JStoutHorse_Report_*.pdf')),
     'mlb':   pdf_preview_b64(latest_pdf(r'C:\Users\frost\MLBNewsletter',  'newsletter_*.pdf')),
     'odds':  pdf_preview_b64(latest_pdf(r'C:\Users\frost\OddsNewsletter', 'newsletter_*.pdf')),
     'house': pdf_preview_b64(latest_pdf(r'C:\Users\frost\JStoutHouse',    'JStoutHouse_*.pdf')),
 }
+cash_full = pdf_preview_b64(cash_pdf, dpi=150)
 print("PDFs rendered.")
 
 html = """<!DOCTYPE html>
@@ -269,7 +271,7 @@ header{
       <div class="nl-body"><div class="nl-desc">Daily stock market intelligence. 52-week lows, dividend plays, options flow &amp; top movers — before the bell.</div></div>
       <div class="nl-footer">
         <div class="nl-price">$2<span>/mo</span></div>
-        <a href="https://buy.stripe.com/4gM4gsfrn4Ar5T19lr5Rm00" target="_blank" class="nl-btn">Subscribe</a>
+        <a href="preview_cash.html" target="_blank" class="nl-btn">Free Preview</a>
       </div>
       <img src="PREVIEW_CASH" class="nl-preview" alt="Preview">
     </div>
@@ -510,3 +512,63 @@ html = (html
 with open(r'C:\Users\frost\JStoutInc\index.html', 'w', encoding='utf-8') as f:
     f.write(html)
 print(f"Done. {len(html):,} chars written.")
+
+preview_page = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Wall Street Edge — Free Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{{margin:0;padding:0;box-sizing:border-box;}}
+:root{{--red:#c8102e;--cream:#f5f0e8;--dark:#1a1a1a;}}
+body{{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--dark);}}
+nav{{background:#111;border-bottom:3px solid var(--red);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;}}
+.nav-logo{{font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:#fff;}}
+.nav-logo span{{color:var(--red);}}
+.nav-back{{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}}
+.nav-back:hover{{color:#fff;}}
+.wrap{{max-width:860px;margin:48px auto;padding:0 24px 80px;}}
+.kicker{{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:10px;}}
+h1{{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--dark);margin-bottom:6px;}}
+.sub{{font-size:14px;color:#888;margin-bottom:28px;}}
+.preview-img{{width:100%;border-radius:10px;box-shadow:0 8px 48px rgba(0,0,0,.18);border:1px solid rgba(0,0,0,.08);}}
+.cta-box{{margin-top:40px;background:#111;border-radius:14px;padding:36px;text-align:center;}}
+.cta-box h2{{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:#fff;margin-bottom:8px;}}
+.cta-box p{{font-size:13px;color:rgba(255,255,255,.45);margin-bottom:24px;}}
+.cta-btn{{display:inline-block;background:var(--red);color:#fff;padding:14px 40px;border-radius:7px;font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;box-shadow:0 4px 18px rgba(200,16,46,.35);}}
+.cta-btn:hover{{background:#a50d25;}}
+.price{{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:#fff;}}
+.price span{{font-size:16px;color:rgba(255,255,255,.35);font-weight:400;}}
+@media(max-width:600px){{
+  h1{{font-size:26px;}}
+  .cta-box{{padding:24px 18px;}}
+  .price{{font-size:36px;}}
+}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">JStout <span>Inc</span></div>
+  <a href="/" class="nav-back">&#8592; Back to Hub</a>
+</nav>
+<div class="wrap">
+  <div class="kicker">Wall Street Edge &mdash; Sample Issue</div>
+  <h1>Free Preview</h1>
+  <p class="sub">Daily stock market intelligence. 52-week lows, dividend plays, options flow &amp; top movers &mdash; before the bell.</p>
+  <img src="{cash_full}" class="preview-img" alt="Wall Street Edge Preview">
+  <div class="cta-box">
+    <h2>Like what you see?</h2>
+    <p>Get every issue delivered to your inbox every morning for just&nbsp;&mdash;</p>
+    <div class="price">$2<span>/mo</span></div>
+    <br><br>
+    <a href="https://buy.stripe.com/4gM4gsfrn4Ar5T19lr5Rm00" target="_blank" class="cta-btn">Subscribe Now</a>
+  </div>
+</div>
+</body>
+</html>"""
+
+with open(r'C:\Users\frost\JStoutInc\preview_cash.html', 'w', encoding='utf-8') as f:
+    f.write(preview_page)
+print("preview_cash.html written.")
